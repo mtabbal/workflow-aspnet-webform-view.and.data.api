@@ -75,7 +75,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\sticky-footer-navbar.css" />
     <Content Include="Default.aspx" />
-    <Content Include="defautlbak.txt" />
     <Content Include="FileUploadHandler.ashx" />
     <Content Include="GetAccessToken.ashx" />
     <None Include="Properties\PublishProfiles\checkoutmymodel.pubxml" />
