@@ -1,15 +1,33 @@
-Copyright (c) Autodesk, Inc. All rights reserved
+#Autodesk View and Data API workflow sample in ASP.NET Webform 
 
-Autodesk Developer Network (ADN)
 
-Permission to use, copy, modify, and distribute this software in object code form for any purpose and without fee is hereby granted, provided that the above copyright notice appears in all copies and that both that copyright notice and the limited warranty and restricted rights notice below appear in all supporting documentation.
+##Description
 
-AUTODESK PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE. AUTODESK, INC. DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE UNINTERRUPTED OR ERROR FREE.
+*This sample is part of the [Developer-Autodesk/Autodesk-View-and-Data-API-Samples](https://github.com/Developer-Autodesk/autodesk-view-and-data-api-samples) repository.*
 
-workflow-aspnet-webform
-=======================
+This is a sample ASP.NET Webform sample providing functions to :
 
-This sample demos how to use the Autodesk View and Data API to authenticate, upload and translate model files from an asp.net webform application.
+* Upload a file to bucket
+* Start translation
+* Load it in Viewer. 
 
-    You need to set the API keys in the SecretConstants.cs file!
-    This sample uses the RestSharp library. You can add it to your project using NuGet in Visual Studio.
+##Dependencies
+
+This sample uses the RestSharp library. You can add it to your project using NuGet in Visual Studio.
+
+##Setup/Usage Instructions
+
+* Get your consumer key and secret key from http://developer.autodesk.com
+* Set the API keys in the SecretConstants.cs file!
+* Change the bucket name to use for uploading files
+
+
+##Written by 
+
+Daniel Du
+
+
+
+
+
+    
