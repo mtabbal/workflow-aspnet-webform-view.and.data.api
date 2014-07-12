@@ -48,8 +48,8 @@ function clearCurrentModel() {
 function loadDocument(viewer, auth, documentId) {
 
     //var path = VIEWING_URL + '/bubbles/' + documentId.substr(4);
-    var path = VIEWING_URL + '/' + documentId.substr(4);
-    //var path = documentId;
+    //var path = VIEWING_URL + '/' + documentId.substr(4);
+    var path = documentId;
 
     // Find the first 3d geometry and load that.
     Autodesk.Viewing.Document.load(path, auth,
@@ -106,7 +106,7 @@ function createViewer(containerId, urn) {
         var accessToken = data.access_token;
 
         var options = {
-            //'env': 'AutodeskStaging', 
+            //'env': 'AutodeskProduction', //By default, it is AutodeskProduction 
             'accessToken': accessToken,
             'document': urn,
             'refreshToken': getAccessToken   //refresh token when token expires
@@ -114,9 +114,8 @@ function createViewer(containerId, urn) {
 
         Autodesk.Viewing.Initializer(options, function () {
             viewer.initialize();
-            //loadDocument(viewer, getAuthObject(), options.document);
-            //when the changes are pushed to prod
-            loadDocument(viewer, Autodesk.Viewing.Private.getAuthObject(), options.document);
+
+            loadDocument(viewer, null, options.document);
         });
 
     })
