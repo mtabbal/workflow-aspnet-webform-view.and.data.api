@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using log4net;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,8 @@ namespace ViewerUtil
 {
     public class Util
     {
+        private static readonly ILog logger = LogManager.GetLogger(typeof(Util));
+
         string baseUrl = "";
         RestClient m_client;
 
@@ -33,6 +36,8 @@ namespace ViewerUtil
             req.AddParameter("grant_type", "client_credentials");
 
             IRestResponse<AccessToken> resp = m_client.Execute<AccessToken>(req);
+            logger.Debug(resp.Content);
+
             if (resp.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 AccessToken ar = resp.Data;
@@ -59,7 +64,8 @@ namespace ViewerUtil
 
             IRestResponse<BucketDetails> resp = m_client
                 .Execute<BucketDetails>(reqCreateBucket);
-            
+
+            logger.Debug("IsBucketExist --" + resp.Content);
             return resp.StatusCode == System.Net.HttpStatusCode.OK;
         }
 

@@ -29,7 +29,7 @@ namespace ViewAndShare
                 string accessToken = token.access_token;
                 if (accessToken == string.Empty)
                 {
-                    LogExtensions.Log("Authentication error");
+                    //LogExtensions.Log("Authentication error");
                 }
                 context.Session["token"] = accessToken;
             }

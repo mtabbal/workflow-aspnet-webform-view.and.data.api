@@ -16,6 +16,7 @@ namespace ViewAndShare
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
 
@@ -27,7 +28,7 @@ namespace ViewAndShare
                        SecretConstants.CLIENT_SECRET).access_token;
                     if (token == string.Empty)
                     {
-                        LogExtensions.Log("Authentication error");
+                        //LogExtensions.Log("Authentication error");
                     }
                     Session["token"] = token;
                 }

@@ -91,9 +91,10 @@ function createViewer(containerId, urn) {
     var viewerElement = document.createElement("div");
 
     viewerElement.id = 'viewer3d';
-    //viewerElement.style.width = "100%";
-    viewerElement.style.height = viewerContainer.clientHeight;
-    viewerElement.style.width = viewerContainer.clientWidth;
+    //rember the 'px' at the end of height/width
+    viewerElement.style.height = viewerContainer.clientHeight + 'px';
+    viewerElement.style.width = viewerContainer.clientWidth + 'px';
+    viewerElement.style.position = 'absolute'; // this is a must
     viewerContainer.appendChild(viewerElement);
 
 
