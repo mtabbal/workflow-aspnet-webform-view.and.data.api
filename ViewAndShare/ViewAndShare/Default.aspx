@@ -224,7 +224,7 @@
                 <div class="modal-body">
                     <div class="progress progress-striped active">
                         <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                            <span class="sr-only">Processing...</span>
+                            <span class="sr-only">Uploading... Please be patient.</span>
                         </div>
                     </div>
 
@@ -457,7 +457,7 @@
                         }
                         else {
 
-                            createAutoClosingAlert("translation is in progress." + progress);
+                            createAutoClosingAlert("translation is in progress." + progress + '. Why not keep playing with this one until the new model shows up?');
 
                         }
                     },
