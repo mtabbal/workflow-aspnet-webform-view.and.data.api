@@ -154,7 +154,7 @@
         <!-- Viewer container -->
         <div class="row">
             <div>
-                <div id="viewerContainer" class="text-center" style="height: 600px; width: 1170px; background-color: red">
+                <div id="viewerContainer" class="text-center" style="height: 600px; width: 1170px;">
 
                     <%-- <h1>Loading...</h1>--%>
                 </div>
@@ -263,6 +263,8 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            var g_checkProgress = null;
 
             var g_urn = Autodesk.Viewing.Private.getParameterByName("urn");
 
@@ -388,9 +390,14 @@
                                 g_urn = json.urn;
 
 
-                                //start viewer
-                                clearCurrentModel();
-                                initializeViewer('viewerContainer', g_urn);
+                                ////start viewer
+                                //clearCurrentModel();
+                                //initializeViewer('viewerContainer', g_urn);
+
+                                checkProgress(g_urn);
+
+                                //check progress periodically
+                                g_checkProgress = window.setInterval(checkProgress, 10000, g_urn);
 
                             }//end if
                             else {
@@ -423,7 +430,7 @@
 
 
 
-            function checkProgress(urn, token) {
+            function checkProgress(urn) {
 
                 var data = new FormData();
                 data.append('urn', urn);
@@ -434,33 +441,34 @@
                     contentType: false,
                     processData: false,
                     data: data,
-                    success: function (percentage) {
+                    success: function (progress) {
 
 
                         //wait for success to view, actully you don't have to
-                        if (percentage != '' && percentage === '100%') {
+                        if (progress != '' && progress === 'complete') {
 
-                            //window.clearInterval(checkProgress);
-                            createAutoClosingAlert('Congratulations!! ' + percentage + " translation completed.");
+                            window.clearInterval(g_checkProgress);
+                            createAutoClosingAlert('Congratulations!! translatioin ' + progress);
 
 
-                            //load the model into viewer
-                            loadModel(g_urn, token);
+                            //start viewer
+                            clearCurrentModel();
+                            initializeViewer('viewerContainer', urn);
                         }
                         else {
 
-                            createAutoClosingAlert("translation is in progress." + percentage + " completed");
+                            createAutoClosingAlert("translation is in progress." + progress);
 
                         }
                     },
                     error: function () {
-                        //clearInterval(checkProgress);
+                        clearInterval(g_checkProgress);
                         createAutoClosingAlert_Error("error when checking progress");
                     }
 
                 });
 
-                //window.setInterval(checkProgress, 10000, urn, token);
+                
 
             }
 

@@ -236,7 +236,7 @@ namespace ViewerUtil
                 //{
                 //    percentage = "100%";
                 //}
-                percentage = bt.success;
+                percentage = bt.progress;
             }
             return percentage;
         }

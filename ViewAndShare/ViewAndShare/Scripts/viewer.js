@@ -91,7 +91,11 @@ function createViewer(containerId, urn) {
     var viewerElement = document.createElement("div");
 
     viewerElement.id = 'viewer3d';
+    ////by percentage does not work
+    //viewerElement.style.height = '100%';
+    //viewerElement.style.width = '100%';
     //rember the 'px' at the end of height/width
+    //as style.width and style.height actually takes a string
     viewerElement.style.height = viewerContainer.clientHeight + 'px';
     viewerElement.style.width = viewerContainer.clientWidth + 'px';
     viewerElement.style.position = 'absolute'; // this is a must
