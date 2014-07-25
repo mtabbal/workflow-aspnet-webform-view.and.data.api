@@ -9,17 +9,18 @@ This is a sample ASP.NET Webform sample providing functions to :
 
 * Upload a file to bucket
 * Start translation
+* Check translation progress
 * Load it in Viewer. 
 
 ##Dependencies
 
-This sample uses the RestSharp library. You can add it to your project using NuGet in Visual Studio.
+This sample uses the [RestSharp](http://restsharp.org/) library. You can add it to your project using NuGet in Visual Studio.
 
 ##Setup/Usage Instructions
 
 * Get your consumer key and secret key from http://developer.autodesk.com
-* Set the API keys in the SecretConstants.cs file!
-* Change the bucket name to use for uploading files
+* Set the API keys in the SecretConstants.cs file
+* Change the bucket name for uploading files
 
 ## License
 
