@@ -3,6 +3,8 @@
 
 #secret files
 *Secret*.*
+log/
+clientfullstackSample/
 
 # User-specific files
 *.suo

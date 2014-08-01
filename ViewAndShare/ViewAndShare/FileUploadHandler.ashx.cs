@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.SessionState;
@@ -48,8 +49,27 @@ namespace ViewAndShare
                 foreach (string key in files)
                 {
                     HttpPostedFile file = files[key];
-                    
-                    
+
+                    //obj files created by ReCap 360 
+                    if (System.IO.Path.GetExtension(file.FileName) == "obj.zip")
+                    {
+                        //unzip it and upload seperatly
+
+                        string fdr = System.DateTime.Now.Ticks.ToString();
+                        if (!Directory.Exists(HttpContext.Current.Server.MapPath("Temp/") + "//" + fdr))
+                        {
+                            Directory.CreateDirectory(@HttpContext.Current.Server.MapPath("Temp/") + "//" + fdr);
+                        }
+
+                        string tempFolder = HttpContext.Current.Server.MapPath("Temp/") + "//" + fdr;
+                        //ZipUtil.ExtractZipFile()
+
+                        //upload each files in the extracted folder
+
+
+                    }
+                    else
+                    { }
 
                     string base64Urn = util.UploadFile(bucketKey, accessToken, file);
                     if (base64Urn != string.Empty) //upload success

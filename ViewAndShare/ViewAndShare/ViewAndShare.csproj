@@ -38,6 +38,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -60,6 +68,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="clientfullstackSample\help.html" />
+    <Content Include="clientfullstackSample\MyScript.js" />
+    <Content Include="clientfullstackSample\viewer.htm" />
+    <Content Include="clientfullstackSample\ViewerDeveloperSample_working.mp4" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -68,6 +80,7 @@
     <Content Include="Default.aspx" />
     <Content Include="FileUploadHandler.ashx" />
     <Content Include="GetAccessToken.ashx" />
+    <Content Include="config\log4net.config" />
     <None Include="Properties\PublishProfiles\checkoutmymodel %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\checkoutmymodel.pubxml" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
@@ -83,7 +96,9 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\viewer.js" />
     <Content Include="viewer.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\jquery-1.9.0.min.map" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +139,10 @@
       <Project>{fc0b05bf-2b1d-4adc-9133-2796319f79f3}</Project>
       <Name>ViewerUtil</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="log\" />
+    <Folder Include="Temp\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -44,7 +44,7 @@ namespace ViewerUtil
                 if (ar != null)
                 {
                     token = ar;
-                    
+
                 }
             }
             return token;
@@ -65,7 +65,7 @@ namespace ViewerUtil
             IRestResponse<BucketDetails> resp = m_client
                 .Execute<BucketDetails>(reqCreateBucket);
 
-            logger.Debug("IsBucketExist --" + resp.Content);
+            logger.Debug(resp.Content);
             return resp.StatusCode == System.Net.HttpStatusCode.OK;
         }
 
@@ -88,6 +88,8 @@ namespace ViewerUtil
             }
             else
             {
+                logger.Error("GetBucketDetails error. http code:" + resp.StatusCode);
+                logger.Debug(resp.Content);
                 return null;
             }
         }
@@ -109,6 +111,8 @@ namespace ViewerUtil
 
             IRestResponse respBC = m_client
                 .Execute(reqCreateBucket);
+
+            logger.Debug(respBC.Content);
 
             return (respBC.StatusCode == System.Net.HttpStatusCode.OK
               || respBC.StatusCode == System.Net.HttpStatusCode.Conflict); // already existed
@@ -163,6 +167,7 @@ namespace ViewerUtil
             {
                 string content = resp.Content;
 
+                logger.Debug(content);
                 //TODO: better way to get ID value from response with Object-Origented way
                 var id = GetIdValueInJson(content);
                 base64URN = Base64Encode(id);
@@ -192,21 +197,22 @@ namespace ViewerUtil
             if (resp.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 content = resp.Content;
-                //message += " Translation starting...";
+                logger.Info(" Translation starting...");
 
                 return true;
             }
             else if (resp.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 content = resp.Content;
-                //message += " Translation has been posted before, it is ready for viewing";
 
+                logger.Info("Translation has been posted before, it is ready for viewing");
                 return true;
             }
             else
             {
-                //message += " error when trying to tranlate. msg =" + resp.Content;
 
+                logger.Error("error when trying to tranlate. http code:" + resp.StatusCode);
+                logger.Debug(resp.Content);
                 return false;
             }
         }
@@ -216,7 +222,7 @@ namespace ViewerUtil
             string percentage = "0%";
             RestRequest req = new RestRequest();
             //Start translation, create bubble
-          
+
             string resource = string.Format("viewingservice/v1/{0}/status", base64URN);
             req.Resource = resource;
             req.Method = Method.GET;
@@ -232,11 +238,13 @@ namespace ViewerUtil
                 && resp.Data != null)
             {
                 BubbleStatus bt = resp.Data;
-                //if (string.Equals("complete",bt.progress, StringComparison.CurrentCultureIgnoreCase))
-                //{
-                //    percentage = "100%";
-                //}
+
                 percentage = bt.progress;
+            }
+            else
+            {
+                logger.Error("error when getting progress. http code:" + resp.StatusCode);
+                logger.Debug(resp.Content);
             }
             return percentage;
         }
