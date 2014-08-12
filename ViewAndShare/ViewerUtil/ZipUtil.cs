@@ -112,8 +112,25 @@ namespace ViewerUtil
             ).LocalPath;
 
             return assemblyFile;
-
-
         }
+
+        private string GetTempUnzipFolderPath()
+        {
+            string path = GetCurrentPath() + "\\unzipped";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+           
+            //clear the temp folder
+            foreach (var file in Directory.GetFiles(path))
+            {
+                File.Delete(file);
+            }
+           
+
+            return path;
+        }
+
     }
 }

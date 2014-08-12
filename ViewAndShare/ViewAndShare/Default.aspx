@@ -154,7 +154,11 @@
         <!-- Viewer container -->
         <div class="row">
             <div>
+               
                 <div id="viewerContainer" class="text-center" style="height: 600px; width: 1170px;">
+                    <%-- <div id="toolbarContainer"class="btn-group btn-group-justified">
+
+                    </div>--%>
 
                     <%-- <h1>Loading...</h1>--%>
                 </div>
