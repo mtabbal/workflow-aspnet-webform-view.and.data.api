@@ -17,7 +17,7 @@ var toolbarConfig = {
                     'buttonText' : 'Rotation',
                     'tooltip': 'Ratate the model at X direction',
                     'cssClassName': 'glyphicon glyphicon glyphicon-play-circle',
-                    'iconUrl' :'',
+                    'iconUrl' :'Images/3d_rotation.png',
                     'onclick': buttonRotationClick
                 },
                 {
@@ -25,7 +25,7 @@ var toolbarConfig = {
                     'buttonText': 'Explode',
                     'tooltip': 'Explode the model',
                     'cssClassName': '',
-                    'iconUrl': '',
+                    'iconUrl': 'Images/explode_icon.jpg',
                     'onclick': buttonExplodeClick
                 }
 
@@ -46,6 +46,7 @@ var toolbarConfig = {
                 },
                 {
                     'id': 'radio_button2',
+                    'buttonText': 'radio_button2',
                     'tooltip': 'this is tooltip for radio button2',
                     'cssClassName': '',
                     'iconUrl': '',
@@ -376,7 +377,8 @@ function getAccessToken() {
 //    var subToolbar = toolbar.addSubToolbar('sub1');
 
 //    //add some  buttons to it
-//    var button1 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button1", "Tooltip for Button1",
+//    var button1 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button1",
+//        "Tooltip for Button1",
 //        function (e) {
 //            alert("Button1 is clicked.");
 //        });
@@ -384,7 +386,8 @@ function getAccessToken() {
 //    //add icon for the button
 //    button1.className = 'glyphicon glyphicon-euro';
 
-//    var button2 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button2", "Tool tip for Button2",
+//    var button2 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button2",
+//        "Tool tip for Button2",
 //        function (e) {
 //            alert("Button2 is clicked");
 //        });
@@ -397,11 +400,13 @@ function getAccessToken() {
 //    var radioSubToolbar = toolbar.addSubToolbar('radioSub2', true); //id, isRadio
     
 //    // add some buttons to it
-//    var button3 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button3", "Tool tip for Button3",
+//    var button3 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button3",
+//        "Tool tip for Button3",
 //        function (e) {
 //            alert("Button2 is clicked");
 //        });
-//    var button4 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button4", "Tool tip for Button4",
+//    var button4 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button4",
+//        "Tool tip for Button4",
 //        function (e) {
 //            alert("Button4 is clicked");
 //        });
@@ -499,13 +504,26 @@ function addToolbar(toolbarConfig, viewer) {
         subToolbar.setToolVisibility(stb.visible);
 
         //create buttons
-        for (var j = 0, blen = stb.buttons.length; j < blen; j++) {
+        for (var j = 0, len2 = stb.buttons.length; j < len2; j++) {
             var btn = stb.buttons[j];
             var button = Autodesk.Viewing.UI.ToolBar.createMenuButton(btn.id, btn.tooltip, btn.onclick);
-            button.className = btn.cssClassName;
-            var btnText = document.createElement('span');
-            btnText.innerText = btn.buttonText;
-            button.appendChild(btnText);
+            //set css calss if availible 
+            if (btn.cssClassName) {
+                button.className = btn.cssClassName;
+            }
+            //set button text if availible
+            if (btn.buttonText) {
+                var btnText = document.createElement('span');
+                btnText.innerText = btn.buttonText;
+                button.appendChild(btnText);
+            }
+            //set icon image if availible
+            if (btn.iconUrl) {
+                var ico = document.createElement('img');
+                ico.src = btn.iconUrl;
+                ico.className = 'toolbar-button';
+                button.appendChild(ico);
+            }
             //add button to sub toolbar
             toolbar.addToSubToolbar(stb.id, button);
 
