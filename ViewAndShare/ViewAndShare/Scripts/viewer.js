@@ -14,10 +14,10 @@ var toolbarConfig = {
             'buttons': [
                 {
                     'id': 'buttonRotation',
-                    'buttonText' : 'Rotation',
+                    'buttonText': 'Rotation',
                     'tooltip': 'Ratate the model at X direction',
                     'cssClassName': 'glyphicon glyphicon glyphicon-play-circle',
-                    'iconUrl' :'Images/3d_rotation.png',
+                    'iconUrl': 'Images/3d_rotation.png',
                     'onclick': buttonRotationClick
                 },
                 {
@@ -74,7 +74,7 @@ function buttonRotationClick(e) {
 
             var xStep = 30;
             cam.translateX(xStep);
-            _viewer.applyCamera(cam,false);
+            _viewer.applyCamera(cam, false);
 
 
         }, 100);
@@ -82,12 +82,13 @@ function buttonRotationClick(e) {
     else {
         clearInterval(rotationActive);
         rotationActive = undefined;
-    }
+    }
+
 }
 
 function degInRad(deg) {
     return deg * Math.PI / 180;
-}  
+}
 
 var explodeActive;
 function buttonExplodeClick() {
@@ -113,12 +114,49 @@ function buttonExplodeClick() {
 
 function button2ClickCallback(e) {
     alert('Button2 is clicked');
+
 }
 function radioButton1ClickCallback(e) {
     alert('radio Button1 is clicked');
+    startMouseTracking(true);
+
 }
 function radioButton2ClickCallback(e) {
     alert('radio Button2 is clicked');
+    //startMouseTracking(false);
+}
+
+
+function startMouseTracking(start) {
+    if (start) {
+
+        _viewer.addEventListener('mousemove', onViewerMouseMove);
+        _viewer.addEventListener('mousedown', onViewerMouseDown);
+        _viewer.addEventListener('mouseup', onViewerMouseUp);
+
+    } else {
+        //window.onmousemove = function (event) { };
+        _viewer.removeEventListener('mousemove');
+        _viewer.removeEventListener('mousedown');
+        _viewer.removeEventListener('mouseup');
+    }
+
+    function onViewerMouseMove(event) {
+        event = event || window.event; //IE
+        var mouseX = event.clientX;
+        var mouseY = event.clientY;
+        var mouseZ = 0;
+
+        console.log("x " + mouseX + " y " + mouseY);
+    }
+
+    function onViewerMouseDown(event) {
+
+    }
+
+    function onViewerMouseUp(event) {
+
+    }
 }
 ////////////////////////////////////////////////////////////////////
 
@@ -146,13 +184,12 @@ function createViewer(containerId, urn) {
     viewerElement.style.position = 'absolute'; // this is a must
     viewerContainer.appendChild(viewerElement);
 
-
-
-    var viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerElement, {});
-    //var viewer = new Autodesk.Viewing.Viewer3D(viewerElement, {});
+    var viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerElement, { extensions: ['SampleExtension'] });
+    //viewer = new Autodesk.Viewing.Viewer3D(viewerElement, {});
+    //viewer = new Autodesk.Viewing.Viewer3D(viewerElement, { extensions: ['SampleExtension'] });
 
     //As a best practice, access token should be generated from server side
-    $.getJSON('/GetAccessToken.ashx', function (data) {
+    $.getJSON('GetAccessToken.ashx', function (data) {
 
         var accessToken = data.access_token;
 
@@ -164,9 +201,10 @@ function createViewer(containerId, urn) {
         };
 
         Autodesk.Viewing.Initializer(options, function () {
-            viewer.initialize();
+            //viewer.initialize();
+            viewer.start();
 
-            loadDocument(viewer, null, options.document);
+            loadDocument(viewer, options.document);
         });
 
     })
@@ -175,14 +213,6 @@ function createViewer(containerId, urn) {
         //alert('getJSON request failed! ' + textStatus);
     })
     .always();
-
-
-
-    viewer.addEventListener('selection', onViewerItemSelected);
-
-
-    //add custom toolbar 
-    addToolbar(toolbarConfig, viewer);
 
 
     // disable scrolling on DOM document 
@@ -205,7 +235,6 @@ function createViewer(containerId, urn) {
         e.preventDefault();
     });
 
-    _viewer = viewer;
     return viewer;
 }
 
@@ -213,22 +242,20 @@ function createViewer(containerId, urn) {
 //
 //
 ///////////////////////////////////////////////////////////////////////////
-function loadDocument(viewer, auth, documentId) {
-
-    //var path = VIEWING_URL + '/bubbles/' + documentId.substr(4);
-    //var path = VIEWING_URL + '/' + documentId.substr(4);
-    var path = documentId;
+function loadDocument(viewer, documentId) {
 
     // Find the first 3d geometry and load that.
-    Autodesk.Viewing.Document.load(path, auth,
+    Autodesk.Viewing.Document.load(documentId,
         function (doc) {// onLoadCallback
 
+            var rootItem = doc.getRootItem();
             var geometryItems = [];
-            geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {
+            geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(rootItem, {
                 'type': 'geometry',
                 'role': '3d'
             }, true);
 
+            //load the first gemoetry 
             if (geometryItems.length > 0) {
                 viewer.load(doc.getViewablePath(geometryItems[0]),
                     null,           //sharedPropertyDbPath
@@ -250,7 +277,7 @@ function loadDocument(viewer, auth, documentId) {
 //
 //
 ///////////////////////////////////////////////////////////////////////////
-function getPropertyValue(viewer, dbId, name, callback) {
+function getPropertyValue(viewer, dbId, propName, callback) {
 
     function propsCallback(result) {
 
@@ -260,7 +287,7 @@ function getPropertyValue(viewer, dbId, name, callback) {
 
                 var prop = result.properties[i];
 
-                if (prop.displayName == name) {
+                if (prop.displayName === propName) {
 
                     callback(prop.displayValue);
                 }
@@ -283,7 +310,7 @@ function clearCurrentModel() {
     if (viewerElement != null) {
         viewerElement.parentNode.removeChild(viewerElement);
     }
-    
+
 }
 
 
@@ -319,11 +346,21 @@ function onViewerItemSelected(event) {
 
         var dbId = dbIdArray[i];
 
-        //alert(dbId);
+        _viewer.getProperties(dbId, function (result) {
+            if (result.properties) {
 
+                for (var i = 0; i < result.properties.length; i++) {
+
+                    var prop = result.properties[i];
+
+                    console.log(prop.displayName + ' : ' + prop.displayValue);
+
+                }
+            }
+        });
     }
 
-    
+
 }
 
 
@@ -333,10 +370,18 @@ function onViewerItemSelected(event) {
 ///////////////////////////////////////////////////////////////////////////
 function initializeViewer(containerId, urn) {
 
-       
-       _viewer = createViewer(containerId, urn);
 
-    
+    _viewer = createViewer(containerId, urn);
+
+    _viewer.addEventListener('selection', onViewerItemSelected);
+
+    //_viewer.setBackgroundColor(0, 0, 0, 255, 255, 255);
+    //_viewer.setEnvironmentMap('http://www.thesleuthjournal.com/wp-content/uploads/2014/05/grass.jpg');
+
+    //add custom toolbar 
+    addToolbar(toolbarConfig, _viewer);
+
+
 }
 
 
@@ -398,7 +443,7 @@ function getAccessToken() {
 
 //    //create a radio sub toolbar
 //    var radioSubToolbar = toolbar.addSubToolbar('radioSub2', true); //id, isRadio
-    
+
 //    // add some buttons to it
 //    var button3 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button3",
 //        "Tool tip for Button3",
@@ -490,7 +535,7 @@ function addToolbar(toolbarConfig, viewer) {
         containter.style.position = 'relative';
         containter.style.top = '75px';
         containter.style.left = '0px';
-        containter.style.zIndex= '200';
+        containter.style.zIndex = '200';
         viewer.clientContainer.appendChild(containter);
     }
 
@@ -533,7 +578,7 @@ function addToolbar(toolbarConfig, viewer) {
 
     }
 
-  
+
 
 
 
