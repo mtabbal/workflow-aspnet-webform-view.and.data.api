@@ -62,27 +62,29 @@ var toolbarConfig = {
 var rotationActive;
 function buttonRotationClick(e) {
 
-    if (rotationActive == undefined) {
+    alert('Button Rotation is clicked');
+    //if (rotationActive == undefined) {
 
-        rotationActive = setInterval(function () {
-            var cam = _viewer.getCamera();
-            //rotate 1 degree
-            //cam.rotation.order = 'YXZ'
-            //cam.rotateOnAxis((new THREE.Vector3(0, 1, 0)).normalize(), degInRad(1));
+    //    rotationActive = setInterval(function () {
+    //        var cam = _viewer.getCamera();
+    //        //rotate 1 degree
+    //        //cam.rotation.order = 'YXZ'
+    //        //cam.rotateOnAxis((new THREE.Vector3(0, 1, 0)).normalize(), degInRad(1));
 
-            //cam.rotation.x += degInRad(1);
+    //        //cam.rotation.x += degInRad(1);
 
-            var xStep = 30;
-            cam.translateX(xStep);
-            _viewer.applyCamera(cam, false);
+    //        var xStep = 30;
+    //        cam.translateX(xStep);
+
+    //        _viewer.applyCamera(cam, false);
 
 
-        }, 100);
-    }
-    else {
-        clearInterval(rotationActive);
-        rotationActive = undefined;
-    }
+    //    }, 100);
+    //}
+    //else {
+    //    clearInterval(rotationActive);
+    //    rotationActive = undefined;
+    //}
 
 }
 
@@ -110,7 +112,8 @@ function buttonExplodeClick() {
         explodeActive = undefined;
     }
 
-}
+}
+
 
 function button2ClickCallback(e) {
     alert('Button2 is clicked');
@@ -164,7 +167,12 @@ function startMouseTracking(start) {
 //
 //
 ///////////////////////////////////////////////////////////////////////////
-function createViewer(containerId, urn) {
+function createViewer(containerId, urn, viewerEnv) {
+
+
+    if (typeof (viewerEnv) == "undefined") {
+        viewerEnv = "AutodeskProduction";
+    }
 
     if (urn.indexOf('urn:') !== 0)
         urn = 'urn:' + urn;
@@ -184,7 +192,11 @@ function createViewer(containerId, urn) {
     viewerElement.style.position = 'absolute'; // this is a must
     viewerContainer.appendChild(viewerElement);
 
-    var viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerElement, { extensions: ['SampleExtension'] });
+    var viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerElement,
+            {
+                extensions: ['BasicExtension']
+            }
+        );
     //viewer = new Autodesk.Viewing.Viewer3D(viewerElement, {});
     //viewer = new Autodesk.Viewing.Viewer3D(viewerElement, { extensions: ['SampleExtension'] });
 
@@ -194,7 +206,7 @@ function createViewer(containerId, urn) {
         var accessToken = data.access_token;
 
         var options = {
-            //'env': 'AutodeskProduction', //By default, it is AutodeskProduction 
+            'env': viewerEnv, //By default, it is AutodeskProduction 
             'accessToken': accessToken,
             'document': urn,
             'refreshToken': getAccessToken   //refresh token when token expires
@@ -250,10 +262,20 @@ function loadDocument(viewer, documentId) {
 
             var rootItem = doc.getRootItem();
             var geometryItems = [];
+
+            //check 3d first
             geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(rootItem, {
                 'type': 'geometry',
                 'role': '3d'
             }, true);
+
+            //no 3d geometry, check 2d
+            if (geometryItems.length == 0) {
+                geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(rootItem, {
+                    'type': 'geometry',
+                    'role': '2d'
+                }, true);
+            }
 
             //load the first gemoetry 
             if (geometryItems.length > 0) {
@@ -267,10 +289,90 @@ function loadDocument(viewer, documentId) {
                     }
                 );
             }
+
+
+
+            //For revit, getting guid properties 
+            prepareGuidDb(doc);
+
+
         }, function (errorMsg) {// onErrorCallback
             alert("Load Error: " + errorMsg);
         });
 }
+
+
+
+
+//global variable
+var _guidDbArray;
+
+//call this in loadDocument()
+function prepareGuidDb(doc) {
+    //get property db path
+    var propDbPath = doc.getPropertyDbPath();
+    console.log('propDbPath:' + propDbPath);
+
+    var objectIdDbFullPath = 'https://developer.api.autodesk.com/viewingservice/v1/items/'
+    + propDbPath + 'objects_ids.json.gz?domain=' + window.location.hostname;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', objectIdDbFullPath, true);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    var accessToken = getAccessToken();
+    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+    xhr.responseType = 'arraybuffer';
+
+    xhr.onload = function () {
+
+        var dbs = xhr.response;
+
+        var rawbuf = new Uint8Array(dbs);
+        //It's possible that if the Content-Encoding header is set,
+        //the browser unzips the file by itself, so let's check if it did.
+        if (rawbuf[0] == 31 && rawbuf[1] == 139) {
+            rawbuf = new Zlib.Gunzip(rawbuf).decompress();
+        }
+
+        var str = ab2str(rawbuf);
+        //console.log(str);
+
+        _guidDbArray = str.split(',');
+        
+
+    };
+
+    xhr.send();
+}
+
+
+function getGuidByNodeId(nodeId) {
+    var guid;
+    if (_guidDbArray) {
+        guid = _guidDbArray[nodeId];
+    }
+
+    return guid;
+}
+
+// ArrayBuffer to string
+function ab2str(buf) {
+    var chars = new Uint8Array(buf);
+
+    //http://codereview.stackexchange.com/questions/3569/pack-and-unpack-bytes-to-strings 
+    //throw a "RangeError: Maximum call stack size exceeded" exception 
+    //in browsers using JavaScriptCore (i.e. Safari) if chars has a length 
+    //greater than 65536
+    //return String.fromCharCode.apply(null, chars);
+
+    var s = "";
+    for (var i = 0, l = chars.length; i < l; i++)
+        s += String.fromCharCode(chars[i]);
+
+    return s;
+
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -346,18 +448,28 @@ function onViewerItemSelected(event) {
 
         var dbId = dbIdArray[i];
 
-        _viewer.getProperties(dbId, function (result) {
-            if (result.properties) {
 
-                for (var i = 0; i < result.properties.length; i++) {
+        //get guid
+        var guid = getGuidByNodeId(dbId);
+        console.log('guid :' + guid);
+   
+        //_viewer.getProperties(dbId, function (result) {
+        //    if (result.properties) {
 
-                    var prop = result.properties[i];
+        //        for (var i = 0; i < result.properties.length; i++) {
 
-                    console.log(prop.displayName + ' : ' + prop.displayValue);
+        //            var prop = result.properties[i];
 
-                }
-            }
-        });
+        //            if (prop.hidden) {
+        //                console.log('[Hidden] - ' + prop.displayName + ' : ' + prop.displayValue);
+        //            } else {
+        //                console.log(prop.displayName + ' : ' + prop.displayValue);
+        //            }
+
+
+        //        }
+        //    }
+        //});
     }
 
 
@@ -368,10 +480,13 @@ function onViewerItemSelected(event) {
 //
 //
 ///////////////////////////////////////////////////////////////////////////
-function initializeViewer(containerId, urn) {
+function initializeViewer(containerId, urn, viewerEnv) {
 
+    if (typeof (viewerEnv) == "undefined") {
+        viewerEnv = "AutodeskProduction";
+    }
 
-    _viewer = createViewer(containerId, urn);
+    _viewer = createViewer(containerId, urn, viewerEnv);
 
     _viewer.addEventListener('selection', onViewerItemSelected);
 
@@ -540,37 +655,39 @@ function addToolbar(toolbarConfig, viewer) {
     }
 
     //create a toolbar
-    var toolbar = new Autodesk.Viewing.UI.ToolBar(containter);
+    var toolbar = new Autodesk.Viewing.UI.Toolbar(containter);
 
     for (var i = 0, len = toolbarConfig.subToolbars.length; i < len; i++) {
-        var stb = toolbarConfig.subToolbars[i];
+        var cfgSubToolbar = toolbarConfig.subToolbars[i];
         //create a subToolbar
-        var subToolbar = toolbar.addSubToolbar(stb.id, stb.isRadio);
-        subToolbar.setToolVisibility(stb.visible);
+        var subToolbar = toolbar.addSubToolbar(cfgSubToolbar.id, cfgSubToolbar.isRadio);
+        subToolbar.setToolVisibility(cfgSubToolbar.visible);
 
         //create buttons
-        for (var j = 0, len2 = stb.buttons.length; j < len2; j++) {
-            var btn = stb.buttons[j];
-            var button = Autodesk.Viewing.UI.ToolBar.createMenuButton(btn.id, btn.tooltip, btn.onclick);
+        for (var j = 0, len2 = cfgSubToolbar.buttons.length; j < len2; j++) {
+            var cfgBtn = cfgSubToolbar.buttons[j];
+            var button = Autodesk.Viewing.UI.Toolbar.createMenuButton(cfgBtn.id, cfgBtn.tooltip, cfgBtn.onclick);
             //set css calss if availible 
-            if (btn.cssClassName) {
-                button.className = btn.cssClassName;
+            if (cfgBtn.cssClassName) {
+                button.className = cfgBtn.cssClassName;
             }
             //set button text if availible
-            if (btn.buttonText) {
-                var btnText = document.createElement('span');
-                btnText.innerText = btn.buttonText;
-                button.appendChild(btnText);
+            if (cfgBtn.buttonText) {
+                //var btnText = document.createElement('span');
+                //btnText.innerText = btn.buttonText;
+                //button.appendChild(btnText);
+                subToolbar.setToolText(button.id, cfgBtn.buttonText);
+                
             }
             //set icon image if availible
-            if (btn.iconUrl) {
+            if (cfgBtn.iconUrl) {
                 var ico = document.createElement('img');
-                ico.src = btn.iconUrl;
+                ico.src = cfgBtn.iconUrl;
                 ico.className = 'toolbar-button';
                 button.appendChild(ico);
             }
             //add button to sub toolbar
-            toolbar.addToSubToolbar(stb.id, button);
+            toolbar.addToSubToolbar(subToolbar.id, button);
 
         }
 

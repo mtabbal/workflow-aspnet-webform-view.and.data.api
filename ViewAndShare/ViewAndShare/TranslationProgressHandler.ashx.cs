@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.SessionState;
@@ -13,7 +14,14 @@ namespace ViewAndShare
     /// </summary>
     public class TranslationProgressHandler : IHttpHandler, IRequiresSessionState
     {
-        Util util = new Util(SecretConstants.BASE_URL);
+        static string BASE_URL = ConfigurationManager.AppSettings.Get("BASE_URL") != null
+? ConfigurationManager.AppSettings.Get("BASE_URL").ToString() : "";
+        static string CLIENT_ID = ConfigurationManager.AppSettings.Get("CLIENT_ID") != null
+            ? ConfigurationManager.AppSettings.Get("CLIENT_ID").ToString() : "";
+        static string CLIENT_SECRET = ConfigurationManager.AppSettings.Get("CLIENT_SECRET") != null
+            ? ConfigurationManager.AppSettings.Get("CLIENT_SECRET").ToString() : "";
+
+        Util util = new Util(BASE_URL);
 
         public void ProcessRequest(HttpContext context)
         {
@@ -23,7 +31,7 @@ namespace ViewAndShare
             //TODO: check expiration of access token
             if (context.Session["token"] == null)
             {
-                AccessToken tokenObj = util.GetAccessToken(SecretConstants.CLIENT_ID, SecretConstants.CLIENT_SECRET);
+                AccessToken tokenObj = util.GetAccessToken(CLIENT_ID, CLIENT_SECRET);
 
                 accessToken = tokenObj.access_token;
                 context.Session["token"] = accessToken;

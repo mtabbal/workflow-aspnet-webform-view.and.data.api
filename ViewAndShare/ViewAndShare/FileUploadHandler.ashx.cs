@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -14,10 +15,22 @@ namespace ViewAndShare
     /// </summary>
     public class FileUploadHandler : IHttpHandler, IRequiresSessionState
     {
-        Util util = new Util(SecretConstants.BASE_URL);
+        static string BASE_URL = ConfigurationManager.AppSettings.Get("BASE_URL") != null
+? ConfigurationManager.AppSettings.Get("BASE_URL").ToString() : "";
+
+
+        Util util = new Util(BASE_URL);
 
         public void ProcessRequest(HttpContext context)
         {
+            string CLIENT_ID = ConfigurationManager.AppSettings.Get("CLIENT_ID") != null
+          ? ConfigurationManager.AppSettings.Get("CLIENT_ID").ToString() : "";
+            string CLIENT_SECRET = ConfigurationManager.AppSettings.Get("CLIENT_SECRET") != null
+                ? ConfigurationManager.AppSettings.Get("CLIENT_SECRET").ToString() : "";
+            string DEFAULT_BUCKET_KEY = ConfigurationManager.AppSettings.Get("DEFAULT_BUCKET_KEY") != null
+                ? ConfigurationManager.AppSettings.Get("DEFAULT_BUCKET_KEY").ToString() : "";
+
+
             string json = "";
             string message = "";
 
@@ -26,17 +39,17 @@ namespace ViewAndShare
             //TODO: check expiration of access token
             if (context.Session["token"] == null)
             {
-                AccessToken token = util.GetAccessToken(SecretConstants.CLIENT_ID, SecretConstants.CLIENT_SECRET);
+                AccessToken token = util.GetAccessToken(CLIENT_ID, CLIENT_SECRET);
 
                 accessToken = token.access_token;
                 context.Session["token"] = accessToken;
 
             }
             accessToken = context.Session["token"].ToString();
-            string bucketKey = SecretConstants.DEFAULT_BUCKET_KEY;
+            string bucketKey = DEFAULT_BUCKET_KEY;
 
             //create bucket if not exist
-            if (!util.IsBucketExist(bucketKey,accessToken))
+            if (!util.IsBucketExist(bucketKey, accessToken))
             {
                 util.CreateBucket(bucketKey, accessToken);
             }

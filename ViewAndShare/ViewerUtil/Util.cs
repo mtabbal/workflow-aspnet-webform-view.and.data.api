@@ -105,7 +105,7 @@ namespace ViewerUtil
             reqCreateBucket.AddParameter("Authorization", "Bearer " + accessToken, ParameterType.HttpHeader);
             reqCreateBucket.AddParameter("Content-Type", "application/json", ParameterType.HttpHeader);
 
-            string body = "{\"bucketKey\":\"" + defaultBucketKey + "\",\"servicesAllowed\":{},\"policy\":\"temporary\"}";
+            string body = "{\"bucketKey\":\"" + defaultBucketKey + "\",\"servicesAllowed\":{},\"policy\":\"persistent\"}";
 
             reqCreateBucket.AddParameter("application/json", body, ParameterType.RequestBody);
 

@@ -255,20 +255,19 @@
     <script src="Scripts/modernizr-2.5.3.js"></script>
 
 
-    <%--    <link rel="stylesheet" href="https://developer-stg.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css">
-    <script src="https://developer-stg.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>--%>
 
-    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css">
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
 
-    <script src="Scripts/SampleExtension/SampleExtension.js"></script>
-    <link href="Scripts/SampleExtension/SampleModelStructurePanel.css" rel="stylesheet" />
-    <script src="Scripts/SampleExtension/SampleModelStructurePanel.js"></script>
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=0.1.86" type="text/css">
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=0.1.86"></script>
+
+    <script src="Scripts/guidToNodeIdMappingExtension.js"></script>
 
     <script src="Scripts/viewer.js"></script>
 
 
     <script type="text/javascript">
+
+        var viewerEnv = "AutodeskProduction"; //AutodeskProduction,AutodeskStaging
 
         $(document).ready(function () {
 
@@ -278,11 +277,11 @@
 
             //default model
             if (!g_urn) {
-                g_urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6ZGFuaWVsX3RyYW5zbGF0ZV9idWNrZXQzL0RyaWxsLmR3Zng=';
+                g_urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YnVja2V0X2NoZWNrb3V0bXltb2RlbC9EcmlsbC5kd2Z4';
             }
 
             //init viewer and show the default model
-            initializeViewer('viewerContainer', g_urn);
+            initializeViewer('viewerContainer', g_urn, viewerEnv);
 
 
 
@@ -400,7 +399,7 @@
 
                                 ////start viewer
                                 //clearCurrentModel();
-                                //initializeViewer('viewerContainer', g_urn);
+                                //initializeViewer('viewerContainer', g_urn, viewerEnv);
 
                                 checkProgress(g_urn);
 
@@ -461,7 +460,7 @@
 
                             //start viewer
                             clearCurrentModel();
-                            initializeViewer('viewerContainer', urn);
+                            initializeViewer('viewerContainer', urn, viewerEnv);
                         }
                         else {
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.SessionState;
@@ -18,10 +19,16 @@ namespace ViewAndShare
         {
             string respJson = string.Empty;
 
-            Util util = new Util(SecretConstants.BASE_URL);
+            string BASE_URL = ConfigurationManager.AppSettings.Get("BASE_URL") != null
+                ? ConfigurationManager.AppSettings.Get("BASE_URL").ToString() : "";
+            string CLIENT_ID = ConfigurationManager.AppSettings.Get("CLIENT_ID") != null
+                ? ConfigurationManager.AppSettings.Get("CLIENT_ID").ToString() : "";
+            string CLIENT_SECRET = ConfigurationManager.AppSettings.Get("CLIENT_SECRET") != null
+                ? ConfigurationManager.AppSettings.Get("CLIENT_SECRET").ToString() : "";
 
-            AccessToken token = util.GetAccessToken(SecretConstants.CLIENT_ID,
-                SecretConstants.CLIENT_SECRET);
+            Util util = new Util(BASE_URL);
+
+            AccessToken token = util.GetAccessToken(CLIENT_ID,CLIENT_SECRET);
 
 
             if (context.Session["token"] == null)
