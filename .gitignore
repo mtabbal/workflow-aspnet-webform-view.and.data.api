@@ -3,6 +3,7 @@
 
 #secret files
 SecretConstants.cs
+web.config
 log/
 clientfullstackSample/
 
