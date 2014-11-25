@@ -312,6 +312,11 @@ function prepareGuidDb(doc) {
     //get property db path
     var propDbPath = doc.getPropertyDbPath();
     console.log('propDbPath:' + propDbPath);
+    if (!propDbPath) {
+
+        console.log('propDbPath is null, exiting...');
+        return;
+    }
 
     var objectIdDbFullPath = 'https://developer.api.autodesk.com/viewingservice/v1/items/'
     + propDbPath + 'objects_ids.json.gz?domain=' + window.location.hostname;

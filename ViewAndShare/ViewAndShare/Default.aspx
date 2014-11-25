@@ -257,8 +257,8 @@
 
 
 
-    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=0.1.86" type="text/css">
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=0.1.86"></script>
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css">
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
 
     <script src="Scripts/guidToNodeIdMappingExtension.js"></script>
 
@@ -268,6 +268,7 @@
     <script type="text/javascript">
 
         var viewerEnv = "AutodeskProduction"; //AutodeskProduction,AutodeskStaging
+        //var viewerEnv = "AutodeskStaging"; //AutodeskProduction,AutodeskStaging
 
         $(document).ready(function () {
 
