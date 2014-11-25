@@ -19,8 +19,8 @@ This sample uses the [RestSharp](http://restsharp.org/) library. You can add it 
 ##Setup/Usage Instructions
 
 * Get your consumer key and secret key from http://developer.autodesk.com
-* Set the API keys in the SecretConstants.cs file
-* Change the bucket name for uploading files
+* Set the API keys in the web.config file
+* Change the bucket name for uploading files, bucket name should only includes charactors in lower case and underscore(_).
 
 ## License
 
