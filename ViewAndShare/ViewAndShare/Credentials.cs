@@ -11,9 +11,8 @@ namespace ViewAndShare
         public static string DEFAULT_BUCKET_KEY = "your_bucket_name";
 
         //get your consumer key and the secret key from http://developer.autodesk.com 
-        //public static string CONSUMER_KEY = "your consumer key";
-        //public static string CONSUMER_SECRET = "your secret key";
-
+        public static string CONSUMER_KEY = "your consumer key";
+        public static string CONSUMER_SECRET = "your secret key";
 
 
         
