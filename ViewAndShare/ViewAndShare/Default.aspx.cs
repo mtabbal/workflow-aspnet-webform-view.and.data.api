@@ -22,14 +22,10 @@ namespace ViewAndShare
 
             if (!IsPostBack)
             {
-                string BASE_URL = ConfigurationManager.AppSettings.Get("BASE_URL") != null
-? ConfigurationManager.AppSettings.Get("BASE_URL").ToString() : "";
-                string CLIENT_ID = ConfigurationManager.AppSettings.Get("CLIENT_ID") != null
-                     ? ConfigurationManager.AppSettings.Get("CLIENT_ID").ToString() : "";
-                string CLIENT_SECRET = ConfigurationManager.AppSettings.Get("CLIENT_SECRET") != null
-                     ? ConfigurationManager.AppSettings.Get("CLIENT_SECRET").ToString() : "";
-                string DEFAULT_BUCKET_KEY = ConfigurationManager.AppSettings.Get("DEFAULT_BUCKET_KEY") != null
-           ? ConfigurationManager.AppSettings.Get("DEFAULT_BUCKET_KEY").ToString() : "";
+                string BASE_URL = Credentials.BASE_URL; 
+                string CLIENT_ID = Credentials.CONSUMER_KEY;
+                string CLIENT_SECRET = Credentials.CONSUMER_SECRET;
+                string DEFAULT_BUCKET_KEY = Credentials.DEFAULT_BUCKET_KEY; 
 
                 Util util = new Util(BASE_URL);
 

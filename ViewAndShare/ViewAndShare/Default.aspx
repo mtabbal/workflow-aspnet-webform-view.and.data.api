@@ -99,9 +99,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li id="getThisLink"><a href="#">Share this link to friends</a></li>
                         <li id="getEmbededHtml" class="open-modal"><a href="#">Get embeded HTML code</a></li>
-                        <%-- <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>--%>
+                        
                     </ul>
                 </div>
             </div>
@@ -117,33 +115,6 @@
                 <div id="alert_placeholder" style="padding: 10px">
                 </div>
 
-
-                <%--                <!-- Thumbnail preview -->
-                <div class="row">
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <img data-src="holder.js/300x300" alt="...">
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
-                                    2%
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <img data-src="holder.js/300x300" alt="...">
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
-                                    2%
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>--%>
             </div>
 
             
@@ -156,11 +127,7 @@
             <div>
                
                 <div id="viewerContainer" class="text-center" style="height: 600px; width: 1170px;">
-                    <%-- <div id="toolbarContainer"class="btn-group btn-group-justified">
-
-                    </div>--%>
-
-                    <%-- <h1>Loading...</h1>--%>
+                   
                 </div>
             </div>
 
@@ -210,7 +177,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <%--<button type="button" class="btn btn-primary">Copy to clipboard</button>--%>
+      
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
 
@@ -257,7 +224,7 @@
 
 
 
-    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css">
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css"/>
     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
 
     <script src="Scripts/guidToNodeIdMappingExtension.js"></script>
@@ -397,10 +364,6 @@
 
                                 g_urn = json.urn;
 
-
-                                ////start viewer
-                                //clearCurrentModel();
-                                //initializeViewer('viewerContainer', g_urn, viewerEnv);
 
                                 checkProgress(g_urn);
 

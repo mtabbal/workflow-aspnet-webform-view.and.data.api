@@ -118,27 +118,6 @@ namespace ViewerUtil
               || respBC.StatusCode == System.Net.HttpStatusCode.Conflict); // already existed
         }
 
-        ////The settoken call will validate the token and set the token as 
-        ////secure cookie in your browser. This would mean that the subsequent 
-        ////calls from the browser need not send the token in the authorization 
-        ////header as the token would be sent in the cookie as part of the requests.
-        //public bool SetToken(string accessToken)
-        //{
-        //    RestRequest req = new RestRequest();
-        //    req.Resource = "utility/v1/settoken";
-        //    req.Method = Method.POST;
-        //    req.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-        //    req.AddParameter("access-token", accessToken);
-
-        //    IRestResponse resp = m_client.Execute(req);
-        //    if (resp.StatusCode == System.Net.HttpStatusCode.OK)
-        //    {
-        //        string r = resp.Content;
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
 
         public string UploadFile(string bucketKey, string accessToken, HttpPostedFile file)
         {

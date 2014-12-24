@@ -19,12 +19,12 @@ namespace ViewAndShare
         {
             string respJson = string.Empty;
 
-            string BASE_URL = ConfigurationManager.AppSettings.Get("BASE_URL") != null
-                ? ConfigurationManager.AppSettings.Get("BASE_URL").ToString() : "";
-            string CLIENT_ID = ConfigurationManager.AppSettings.Get("CLIENT_ID") != null
-                ? ConfigurationManager.AppSettings.Get("CLIENT_ID").ToString() : "";
-            string CLIENT_SECRET = ConfigurationManager.AppSettings.Get("CLIENT_SECRET") != null
-                ? ConfigurationManager.AppSettings.Get("CLIENT_SECRET").ToString() : "";
+
+            string BASE_URL = Credentials.BASE_URL;
+            string CLIENT_ID = Credentials.CONSUMER_KEY;
+            string CLIENT_SECRET = Credentials.CONSUMER_SECRET;
+          
+
 
             Util util = new Util(BASE_URL);
 

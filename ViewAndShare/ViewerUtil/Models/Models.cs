@@ -15,16 +15,6 @@ namespace ViewerUtil.Models
     }
 
 
-
-
-
-    public class BucketCreationData
-    {
-        public string bucketKey { get; set; }
-        public List<ServicesAllowed> servicesAllowed { get; set; }
-        public string policy { get; set; }
-    }
-
     public class ServicesAllowed
     {
         public string serviceId { get; set; }
@@ -39,6 +29,19 @@ namespace ViewerUtil.Models
         public DateTime createdDate { get; set; }
         public List<ServicesAllowed> permissions { get; set; }
         public string policy { get; set; }
+    }
+
+    public class BubbleStatus
+    {
+        public string guid { get; set; }
+        public string type { get; set; }
+        public string hasThumbnail { get; set; }
+        public string progress { get; set; }
+        public string startedAt { get; set; }
+        public string status { get; set; }
+        public string success { get; set; }
+        public string urn { get; set; }
+
     }
 
 }

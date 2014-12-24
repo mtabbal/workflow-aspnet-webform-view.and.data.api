@@ -14,12 +14,11 @@ namespace ViewAndShare
     /// </summary>
     public class TranslationProgressHandler : IHttpHandler, IRequiresSessionState
     {
-        static string BASE_URL = ConfigurationManager.AppSettings.Get("BASE_URL") != null
-? ConfigurationManager.AppSettings.Get("BASE_URL").ToString() : "";
-        static string CLIENT_ID = ConfigurationManager.AppSettings.Get("CLIENT_ID") != null
-            ? ConfigurationManager.AppSettings.Get("CLIENT_ID").ToString() : "";
-        static string CLIENT_SECRET = ConfigurationManager.AppSettings.Get("CLIENT_SECRET") != null
-            ? ConfigurationManager.AppSettings.Get("CLIENT_SECRET").ToString() : "";
+        
+        static string BASE_URL = Credentials.BASE_URL;
+        string CLIENT_ID = Credentials.CONSUMER_KEY;
+        string CLIENT_SECRET = Credentials.CONSUMER_SECRET;
+
 
         Util util = new Util(BASE_URL);
 

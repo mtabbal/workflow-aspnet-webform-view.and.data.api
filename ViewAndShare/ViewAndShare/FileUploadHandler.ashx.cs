@@ -15,20 +15,16 @@ namespace ViewAndShare
     /// </summary>
     public class FileUploadHandler : IHttpHandler, IRequiresSessionState
     {
-        static string BASE_URL = ConfigurationManager.AppSettings.Get("BASE_URL") != null
-? ConfigurationManager.AppSettings.Get("BASE_URL").ToString() : "";
-
+        static string BASE_URL = Credentials.BASE_URL;
 
         Util util = new Util(BASE_URL);
 
         public void ProcessRequest(HttpContext context)
         {
-            string CLIENT_ID = ConfigurationManager.AppSettings.Get("CLIENT_ID") != null
-          ? ConfigurationManager.AppSettings.Get("CLIENT_ID").ToString() : "";
-            string CLIENT_SECRET = ConfigurationManager.AppSettings.Get("CLIENT_SECRET") != null
-                ? ConfigurationManager.AppSettings.Get("CLIENT_SECRET").ToString() : "";
-            string DEFAULT_BUCKET_KEY = ConfigurationManager.AppSettings.Get("DEFAULT_BUCKET_KEY") != null
-                ? ConfigurationManager.AppSettings.Get("DEFAULT_BUCKET_KEY").ToString() : "";
+           
+            string CLIENT_ID = Credentials.CONSUMER_KEY;
+            string CLIENT_SECRET = Credentials.CONSUMER_SECRET;
+            string DEFAULT_BUCKET_KEY = Credentials.DEFAULT_BUCKET_KEY; 
 
 
             string json = "";
