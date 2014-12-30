@@ -217,6 +217,8 @@ function createViewer(containerId, urn, viewerEnv) {
             viewer.start();
 
             loadDocument(viewer, options.document);
+
+            
         });
 
     })
@@ -498,10 +500,9 @@ function initializeViewer(containerId, urn, viewerEnv) {
     //_viewer.setBackgroundColor(0, 0, 0, 255, 255, 255);
     //_viewer.setEnvironmentMap('http://www.thesleuthjournal.com/wp-content/uploads/2014/05/grass.jpg');
 
-    //add custom toolbar 
-    addToolbar(toolbarConfig, _viewer);
 
-
+    //extension way
+    _viewer.loadExtension('Autodesk.ADN.Viewing.Extension.CustomToolbar', toolbarConfig);
 }
 
 
@@ -529,178 +530,6 @@ function getAccessToken() {
     var newToken = JSON.parse(data).access_token;
     return newToken;
 }
-
-////////////////////////////////////////////////////////////////////////////
-////
-////
-/////////////////////////////////////////////////////////////////////////////
-//function addToolBar(container) {
-//    //create a toolbar
-//    var toolbar = new Autodesk.Viewing.UI.ToolBar(container);
-
-//    //create a subToolbar
-//    var subToolbar = toolbar.addSubToolbar('sub1');
-
-//    //add some  buttons to it
-//    var button1 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button1",
-//        "Tooltip for Button1",
-//        function (e) {
-//            alert("Button1 is clicked.");
-//        });
-
-//    //add icon for the button
-//    button1.className = 'glyphicon glyphicon-euro';
-
-//    var button2 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button2",
-//        "Tool tip for Button2",
-//        function (e) {
-//            alert("Button2 is clicked");
-//        });
-//    //Add buttons to subtoolbar
-//    toolbar.addToSubToolbar("sub1", button1);
-//    toolbar.addToSubToolbar("sub1", button2);
-
-
-//    //create a radio sub toolbar
-//    var radioSubToolbar = toolbar.addSubToolbar('radioSub2', true); //id, isRadio
-
-//    // add some buttons to it
-//    var button3 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button3",
-//        "Tool tip for Button3",
-//        function (e) {
-//            alert("Button2 is clicked");
-//        });
-//    var button4 = Autodesk.Viewing.UI.ToolBar.createMenuButton("Button4",
-//        "Tool tip for Button4",
-//        function (e) {
-//            alert("Button4 is clicked");
-//        });
-
-//    //add buttons to radioSubToolbar
-//    toolbar.addToSubToolbar("radioSub2", button3);
-//    toolbar.addToSubToolbar("radioSub2", button4);
-
-
-//}
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// Add custom toolbar, here is an example toolbar config, 
-// Using the toolbar config to centralize the toolbar setting
-
-//var toolbarConfig = {
-//    'id': 'toolbar_id_1',
-//    'containerId': 'toolbarContainer',
-//    'subToolbars': [
-//        {
-//            'id': 'subToolbar_id_non_radio_1',
-//            'isRadio': false,
-//            'visible': true,
-//            'buttons': [
-//                {
-//                    'id': 'button1',
-//                    'tooltip': 'this is tooltip for button1',
-//                    'cssClassName': 'glyphicon glyphicon-euro', //bootstrap
-//                    'onclick': button1ClickCallback
-//                },
-//                {
-//                    'id': 'button2',
-//                    'tooltip': 'this is tooltip for button2',
-//                    'cssClassName': '',
-//                    'onclick': button2ClickCallback
-//                }
-
-//            ]
-//        },
-//        {
-//            'id': 'subToolbar_id_radio_1',
-//            'isRadio': true,
-//            'visible': true,
-//            'buttons': [
-//                {
-//                    'id': 'radio_button1',
-//                    'tooltip': 'this is tooltip for radio button1',
-//                    'cssClassName': '',
-//                    'onclick': radioButton1ClickCallback
-//                },
-//                {
-//                    'id': 'radio_button2',
-//                    'tooltip': 'this is tooltip for radio button2',
-//                    'cssClassName': '',
-//                    'onclick': radioButton2ClickCallback
-//                }
-
-//            ]
-//        }
-//    ]
-
-//};
-
-////add custom toolbar 
-//addToolbar(toolbarConfig);
-
-////////////////////////////////////////////////////////////////////////////
-function addToolbar(toolbarConfig, viewer) {
-
-    //find the container element in client webpage first
-    var containter = document.getElementById(toolbarConfig.containerId);
-
-    // if no toolbar container on client's webpage, create one and append it to viewer
-    if (!containter) {
-        containter = document.createElement('div');
-        containter.id = 'custom_toolbar';
-        //'position: relative;top: 75px;left: 0px;z-index: 200;';
-        containter.style.position = 'relative';
-        containter.style.top = '75px';
-        containter.style.left = '0px';
-        containter.style.zIndex = '200';
-        viewer.clientContainer.appendChild(containter);
-    }
-
-    //create a toolbar
-    var toolbar = new Autodesk.Viewing.UI.Toolbar(containter);
-
-    for (var i = 0, len = toolbarConfig.subToolbars.length; i < len; i++) {
-        var cfgSubToolbar = toolbarConfig.subToolbars[i];
-        //create a subToolbar
-        var subToolbar = toolbar.addSubToolbar(cfgSubToolbar.id, cfgSubToolbar.isRadio);
-        subToolbar.setToolVisibility(cfgSubToolbar.visible);
-
-        //create buttons
-        for (var j = 0, len2 = cfgSubToolbar.buttons.length; j < len2; j++) {
-            var cfgBtn = cfgSubToolbar.buttons[j];
-            var button = Autodesk.Viewing.UI.Toolbar.createMenuButton(cfgBtn.id, cfgBtn.tooltip, cfgBtn.onclick);
-            //set css calss if availible 
-            if (cfgBtn.cssClassName) {
-                button.className = cfgBtn.cssClassName;
-            }
-            //set button text if availible
-            if (cfgBtn.buttonText) {
-                //var btnText = document.createElement('span');
-                //btnText.innerText = btn.buttonText;
-                //button.appendChild(btnText);
-                subToolbar.setToolText(button.id, cfgBtn.buttonText);
-                
-            }
-            //set icon image if availible
-            if (cfgBtn.iconUrl) {
-                var ico = document.createElement('img');
-                ico.src = cfgBtn.iconUrl;
-                ico.className = 'toolbar-button';
-                button.appendChild(ico);
-            }
-            //add button to sub toolbar
-            toolbar.addToSubToolbar(subToolbar.id, button);
-
-        }
-
-
-
-    }
-
-
 
 
 
