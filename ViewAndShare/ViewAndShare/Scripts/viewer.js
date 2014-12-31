@@ -531,6 +531,3 @@ function getAccessToken() {
     return newToken;
 }
 
-
-
-}
