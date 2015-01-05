@@ -19,7 +19,6 @@ This sample uses the [RestSharp](http://restsharp.org/) library. You can add it 
 ##Setup/Usage Instructions
 
 * Get your consumer key and secret key from http://developer.autodesk.com
-* Rename \ViewAndShare\ViewAndShare\Credentials_.cs to Credentials.cs
 * Set the API keys in the Credentials.cs file
 * Change the bucket name for uploading files, bucket name should only includes characters, numbers in lower case and underscore(_).
 
