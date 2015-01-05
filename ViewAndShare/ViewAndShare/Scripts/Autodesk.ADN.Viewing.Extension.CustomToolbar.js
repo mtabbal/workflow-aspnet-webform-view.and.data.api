@@ -105,14 +105,7 @@ Autodesk.ADN.Viewing.Extension.CustomToolbar = function (viewer, toolbarConfig) 
         return true;
     };
 
-    _self.unload = function () {
 
-        $('#demoToolbarId').remove();
-
-        console.log('Autodesk.ADN.Viewing.Extension.CustomToolbar unloaded');
-
-        return true;
-    };
 
     _self.addCustomToolbar = function (toolbarConfig) {
 
@@ -122,13 +115,17 @@ Autodesk.ADN.Viewing.Extension.CustomToolbar = function (viewer, toolbarConfig) 
         // if no toolbar container on client's webpage, create one and append it to viewer
         if (!containter) {
             containter = document.createElement('div');
+
+            _viewer.clientContainer.appendChild(containter);
+
             containter.id = 'custom_toolbar';
             //'position: relative;top: 75px;left: 0px;z-index: 200;';
             containter.style.position = 'relative';
             containter.style.top = '75px';
             containter.style.left = '0px';
             containter.style.zIndex = '200';
-            _viewer.clientContainer.appendChild(containter);
+            containter.style.width = _viewer.clientContainer.clientWidth + 'px';
+            
         }
         //Need Jquery UI 
         $('#custom_toolbar').draggable();
@@ -145,22 +142,29 @@ Autodesk.ADN.Viewing.Extension.CustomToolbar = function (viewer, toolbarConfig) 
             //create buttons
             for (var j = 0, len2 = cfgSubToolbar.buttons.length; j < len2; j++) {
                 var cfgBtn = cfgSubToolbar.buttons[j];
-                var button = Autodesk.Viewing.UI.Toolbar.createMenuButton(cfgBtn.id, cfgBtn.tooltip, cfgBtn.onclick);
-                //set css calss if availible 
-                if (cfgBtn.cssClassName) {
-                    button.className = cfgBtn.cssClassName;
-                }
+                var button = Autodesk.Viewing.UI.Toolbar.createMenuButton(
+                        cfgBtn.id,
+                        cfgBtn.tooltip,
+                        cfgBtn.onclick);
+
+                ////set css calss if availible 
+                //if (cfgBtn.cssClassName) {
+                //    button.className = cfgBtn.cssClassName;
+                //}
                 //set button text if availible
                 if (cfgBtn.buttonText) {
                     subToolbar.setToolText(button.id, cfgBtn.buttonText);
                 }
+                //add button to sub toolbar
+                toolbar.addToSubToolbar(subToolbar.id, button);
+
+
                 //set icon image if availible
                 if (cfgBtn.iconUrl) {
                     subToolbar.setToolImage(button.id, cfgBtn.iconUrl);
                 }
-                //add button to sub toolbar
-                toolbar.addToSubToolbar(subToolbar.id, button);
-
+                
+                
             }
 
 
@@ -169,6 +173,15 @@ Autodesk.ADN.Viewing.Extension.CustomToolbar = function (viewer, toolbarConfig) 
 
 
     }
+
+    _self.unload = function () {
+
+        $('#custom_toolbar').remove();
+
+        console.log('Autodesk.ADN.Viewing.Extension.CustomToolbar unloaded');
+
+        return true;
+    };
 };
 
 Autodesk.ADN.Viewing.Extension.CustomToolbar.prototype =

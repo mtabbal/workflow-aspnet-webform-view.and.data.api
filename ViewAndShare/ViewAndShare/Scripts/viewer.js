@@ -41,7 +41,7 @@ var toolbarConfig = {
                     'buttonText': 'radio_button1',
                     'tooltip': 'this is tooltip for radio button1',
                     'cssClassName': '',
-                    'iconUrl': '',
+                    'iconUrl': 'Images/adsk.24x24.png',
                     'onclick': radioButton1ClickCallback
                 },
                 {
@@ -49,7 +49,7 @@ var toolbarConfig = {
                     'buttonText': 'radio_button2',
                     'tooltip': 'this is tooltip for radio button2',
                     'cssClassName': '',
-                    'iconUrl': '',
+                    'iconUrl': 'Images/adsk.32x32.png',
                     'onclick': radioButton2ClickCallback
                 }
 
