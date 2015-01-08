@@ -157,7 +157,7 @@ namespace ViewerUtil
         public bool StartTranslation(string base64URN, string accessToken)
         {
             RestRequest req = new RestRequest();
-            //Start translation, create bubble
+            //Start translation,
             //viewingservice/v1/register
             req.Resource = "viewingservice/v1/register";
             req.Method = Method.POST;

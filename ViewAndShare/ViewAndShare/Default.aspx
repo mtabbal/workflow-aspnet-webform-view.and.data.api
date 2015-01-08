@@ -228,7 +228,6 @@
     <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css"/>
     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
 
-    <script src="Scripts/guidToNodeIdMappingExtension.js"></script>
     <script src="Scripts/Autodesk.ADN.Viewing.Extension.CustomToolbar.js"></script>
     <script src="Scripts/viewer.js"></script>
 
