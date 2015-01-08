@@ -22,6 +22,8 @@ This sample uses the [RestSharp](http://restsharp.org/) library. You can add it 
 * Set the API keys in the Credentials.cs file
 * Change the bucket name for uploading files, bucket name should only includes characters, numbers in lower case and underscore(_).
 
+* Please note that you may get "Load Error: 5" error for the time when you launch the application, this is an expected behaviour. The reason is the application trys to load the default model which is uploaded previously while you do not have the permission to access it when you replace the consumer key and secret key. Ignore this error message and try to upload your models. 
+
 ## License
 
 This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.
