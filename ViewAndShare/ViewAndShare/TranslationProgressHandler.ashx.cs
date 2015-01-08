@@ -39,7 +39,7 @@ namespace ViewAndShare
 
             accessToken = context.Session["token"].ToString();
 
-            string progress = util.GetBubbleCreateProgress(urn, accessToken);
+            string progress = util.GetTranslationProgress(urn, accessToken);
             
 
             context.Response.ContentType = "text/plain";

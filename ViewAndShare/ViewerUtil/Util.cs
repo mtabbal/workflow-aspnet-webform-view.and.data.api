@@ -196,11 +196,10 @@ namespace ViewerUtil
             }
         }
 
-        public string GetBubbleCreateProgress(string base64URN, string accessToken)
+        public string GetTranslationProgress(string base64URN, string accessToken)
         {
             string percentage = "0%";
             RestRequest req = new RestRequest();
-            //Start translation, create bubble
 
             string resource = string.Format("viewingservice/v1/{0}/status", base64URN);
             req.Resource = resource;

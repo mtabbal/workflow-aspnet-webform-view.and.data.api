@@ -207,7 +207,7 @@
 
     <div id="footer">
         <div class="container text-center">
-            <p class="text-muted">Developed by Daniel Du. Autodesk Developer Network.</p>
+            <p class="text-muted">Autodesk Developer Network</p>
         </div>
     </div>
 
