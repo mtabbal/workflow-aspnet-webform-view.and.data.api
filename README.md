@@ -12,6 +12,8 @@ This is a sample ASP.NET Webform sample providing functions to :
 * Check translation progress.
 * Load it in the viewer. 
 
+See the [live demo](http://checkoutmymodel.autodesk.io/).
+
 ##Dependencies
 
 This sample uses the [RestSharp](http://restsharp.org/) library. You can add it to your project using NuGet in Visual Studio.
