@@ -18,11 +18,11 @@ This sample uses the [RestSharp](http://restsharp.org/) library. You can add it 
 
 ##Setup/Usage Instructions
 
-* Get your consumer key and secret key from http://developer.autodesk.com
-* Set the API keys in the Credentials.cs file
+* Get your consumer key and secret key from http://developer.autodesk.com.
+* Set the API keys in the Credentials.cs file.
 * Change the bucket name for uploading files (also in the Credentials.cs file), the bucket name should only include characters, numbers in lower case and underscore(_). [As the name must be unique, we recommend you include your public key token in the name].
 
-* Please note that you may get "Load Error: 5" error for the time when you launch the application, this is an expected behaviour. The reason is the application tries to load the default model which is uploaded previously while you do not have the permission to access it when you replace the consumer key and secret key. Ignore this error message and try to upload your models. 
+* Please note that you may get "Load Error: 5" error for the time when you launch the application, this is an expected behaviour. This is because the application tries to load a default model from a location to which you don't have access. Ignore this error message and upload your models using the 'Upoload your files' button. 
 
 ## License
 
