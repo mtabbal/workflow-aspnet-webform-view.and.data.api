@@ -7,10 +7,10 @@
 
 This is a sample ASP.NET Webform sample providing functions to :
 
-* Upload a file to bucket
-* Start translation
-* Check translation progress
-* Load it in Viewer. 
+* Upload a file to a bucket.
+* Start translation.
+* Check translation progress.
+* Load it in the viewer. 
 
 ##Dependencies
 
