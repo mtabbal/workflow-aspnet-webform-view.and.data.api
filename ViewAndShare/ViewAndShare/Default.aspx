@@ -208,7 +208,7 @@
 
     <div id="footer">
         <div class="container text-center">
-            <p class="text-muted">Developed by Daniel Du. Autodesk Developer Network.</p>
+            <p class="text-muted">Autodesk Developer Network</p>
         </div>
     </div>
 
@@ -229,7 +229,6 @@
     <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css"/>
     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
 
-    <script src="Scripts/guidToNodeIdMappingExtension.js"></script>
     <script src="Scripts/Autodesk.ADN.Viewing.Extension.CustomToolbar.js"></script>
     <script src="Scripts/Autodesk.ADN.Viewing.Extension.SEO.js"></script>
 
