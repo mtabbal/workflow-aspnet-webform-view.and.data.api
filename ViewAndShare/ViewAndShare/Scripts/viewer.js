@@ -1,146 +1,6 @@
 ﻿
 var _viewer;
 
-/////////////////////////////////////////////////////////////////////
-// custom toobar config 
-var toolbarConfig = {
-    'id': 'toolbar_id_1',
-    'containerId': 'toolbarContainer',
-    'subToolbars': [
-        {
-            'id': 'subToolbar_id_non_radio_1',
-            'isRadio': false,
-            'visible': true,
-            'buttons': [
-                {
-                    'id': 'buttonRotation',
-                    'buttonText': 'Rotation',
-                    'tooltip': 'Ratate the model at X direction',
-                    'cssClassName': 'glyphicon glyphicon glyphicon-play-circle',
-                    'iconUrl': 'Images/3d_rotation.png',
-                    'onclick': buttonRotationClick
-                },
-                {
-                    'id': 'buttonExplode',
-                    'buttonText': 'Explode',
-                    'tooltip': 'Explode the model',
-                    'cssClassName': '',
-                    'iconUrl': 'Images/explode_icon.jpg',
-                    'onclick': buttonExplodeClick
-                }
-
-            ]
-        },
-        {
-            'id': 'subToolbar_id_radio_1',
-            'isRadio': true,
-            'visible': true,
-            'buttons': [
-                {
-                    'id': 'radio_button1',
-                    'buttonText': 'radio_button1',
-                    'tooltip': 'this is tooltip for radio button1',
-                    'cssClassName': '',
-                    'iconUrl': 'Images/adsk.24x24.png',
-                    'onclick': radioButton1ClickCallback
-                },
-                {
-                    'id': 'radio_button2',
-                    'buttonText': 'radio_button2',
-                    'tooltip': 'this is tooltip for radio button2',
-                    'cssClassName': '',
-                    'iconUrl': 'Images/adsk.32x32.png',
-                    'onclick': radioButton2ClickCallback
-                }
-
-            ]
-        }
-    ]
-
-};
-
-var rotationActive;
-function buttonRotationClick(e) {
-
-    alert('Button Rotation is clicked');
-
-
-}
-
-function degInRad(deg) {
-    return deg * Math.PI / 180;
-}
-
-var explodeActive;
-function buttonExplodeClick() {
-    var explodeFraction = 0;
-    var explodeIncrement = 0.01;
-    if (explodeActive == undefined) {
-        explodeActive = setInterval(function () {
-            explodeFraction += explodeIncrement;
-            if ((explodeFraction > 1.0) || (explodeFraction < 0.0)) {
-                explodeIncrement = -explodeIncrement;
-                explodeFraction += explodeIncrement;
-            }
-            _viewer.explode(explodeFraction);
-
-        }, 100);
-    }
-    else {
-        clearInterval(explodeActive);
-        explodeActive = undefined;
-    }
-
-}
-
-
-function button2ClickCallback(e) {
-    alert('Button2 is clicked');
-
-}
-function radioButton1ClickCallback(e) {
-    alert('radio Button1 is clicked');
-    startMouseTracking(true);
-
-}
-function radioButton2ClickCallback(e) {
-    alert('radio Button2 is clicked');
-
-}
-
-
-function startMouseTracking(start) {
-    if (start) {
-
-        _viewer.addEventListener('mousemove', onViewerMouseMove);
-        _viewer.addEventListener('mousedown', onViewerMouseDown);
-        _viewer.addEventListener('mouseup', onViewerMouseUp);
-
-    } else {
-        //window.onmousemove = function (event) { };
-        _viewer.removeEventListener('mousemove');
-        _viewer.removeEventListener('mousedown');
-        _viewer.removeEventListener('mouseup');
-    }
-
-    function onViewerMouseMove(event) {
-        event = event || window.event; //IE
-        var mouseX = event.clientX;
-        var mouseY = event.clientY;
-        var mouseZ = 0;
-
-        console.log("x " + mouseX + " y " + mouseY);
-    }
-
-    function onViewerMouseDown(event) {
-
-    }
-
-    function onViewerMouseUp(event) {
-
-    }
-}
-////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -161,14 +21,12 @@ function createViewer(containerId, urn, viewerEnv) {
     var viewerElement = document.createElement("div");
 
     viewerElement.id = 'viewer3d';
-    ////by percentage does not work
-    //viewerElement.style.height = '100%';
-    //viewerElement.style.width = '100%';
+
     //rember the 'px' at the end of height/width
     //as style.width and style.height actually takes a string
     viewerElement.style.height = viewerContainer.clientHeight + 'px';
     viewerElement.style.width = viewerContainer.clientWidth + 'px';
-    viewerElement.style.position = 'absolute'; // this is a must
+    viewerElement.style.position = 'absolute'; 
     viewerContainer.appendChild(viewerElement);
 
     var viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerElement,
@@ -256,7 +114,7 @@ function loadDocument(viewer, documentId) {
                 }, true);
             }
 
-            //load the first gemoetry 
+            //load the first geometry 
             if (geometryItems.length > 0) {
                 viewer.load(doc.getViewablePath(geometryItems[0]),
                     null,           //sharedPropertyDbPath
@@ -264,7 +122,7 @@ function loadDocument(viewer, documentId) {
                         //alert('viewable are loaded successfully');
                     },
                     function () {   //onErrorCallback
-                        //alert('viewable loading failded');
+                        //alert('viewable loading failed');
                     }
                 );
             }
@@ -402,14 +260,7 @@ function initializeViewer(containerId, urn, viewerEnv) {
 
     _viewer.addEventListener('selection', onViewerItemSelected)
 
-    ////extension way
-    //_viewer.loadExtension('Autodesk.ADN.Viewing.Extension.CustomToolbar', toolbarConfig);
 
-    ////load SEO extension
-    //var options = {
-    //    urn : urn
-    //            };
-    //_viewer.loadExtension('Autodesk.ADN.Viewing.Extension.SEO', options);
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -80,14 +80,14 @@
         <div class="starter-template">
             <h1>Check out my models</h1>
             <p class="lead">
-                Upload your models and share it with your friends.
+                Upload your models and share them with your friends.
               
             </p>
 
             <!-- Single button -->
             <div class="text-right" style="padding: 10px;">
                 <div class="btn-group">
-                    <!-- Toogle Buttons -->
+                    <!-- Toggle Buttons -->
                     <button type="button" class="btn btn-primary btn-lg"
                         data-toggle="collapse" data-target="#file-uploading">
                         Upload your files</button>
@@ -97,8 +97,8 @@
                         Share &nbsp; <span class="glyphicon glyphicon-share"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li id="getThisLink"><a href="#">Share this link to friends</a></li>
-                        <li id="getEmbededHtml" class="open-modal"><a href="#">Get embeded HTML code</a></li>
+                        <li id="getThisLink"><a href="#">Share this link with friends</a></li>
+                        <li id="getEmbededHtml" class="open-modal"><a href="#">Get embedded HTML code</a></li>
                         
                     </ul>
                 </div>
@@ -106,7 +106,7 @@
 
             <div id="file-uploading" class="collapse">
                 <%--<input type="file" id="upload-files" name="file">--%>
-                <div id="box">Drag & Drop files from your machine on this box.</div>
+                <div id="box">Drag & Drop files into this box.</div>
                 
                 <div class="text-right">
                     <button id="upload" type="button" class="btn btn-default btn-success">Upload</button>
@@ -149,11 +149,11 @@
                         aria-hidden="true">
                         ×</button>
 
-                    <h4 class="modal-title">Get embeded HTML</h4>
+                    <h4 class="modal-title">Get embedded HTML</h4>
                 </div>
 
                 <div class="modal-body">
-                    <p>Copy and paste following code snippet and embed it into your blog or your own webpage</p>
+                    <p>Copy and paste following code snippet and embed it into your blog or your own web page</p>
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div id="setting" class="control-group">
@@ -228,9 +228,6 @@
 
     <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css"/>
     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
-
-    <script src="Scripts/Autodesk.ADN.Viewing.Extension.CustomToolbar.js"></script>
-    <script src="Scripts/Autodesk.ADN.Viewing.Extension.SEO.js"></script>
 
     <script src="Scripts/viewer.js"></script>
 
@@ -335,12 +332,12 @@
 
             $("#upload").click(function () {
 
-                //clappes the upload panel
+                
                 //$('#file-uploading').collapse();
 
                 if (selectedFiles && selectedFiles.length > 0) {
 
-                    //show the waiting dialog
+                    //show the waiting dialogue
                     var waitDiv = $('#pleaseWaitDialog');
                     waitDiv.modal('show');
 
@@ -376,7 +373,7 @@
 
                             }//end if
                             else {
-                                createAutoClosingAlert_Error("Error happened when uploading/translation, please try again latter.");
+                                createAutoClosingAlert_Error("Error happened when uploading/translating, please try again latter.");
 
                             }//else if
 
@@ -419,11 +416,11 @@
                     success: function (progress) {
 
 
-                        //wait for success to view, actully you don't have to
+                        //wait for success to view, actually you don't have to
                         if (progress != '' && progress === 'complete') {
 
                             window.clearInterval(g_checkProgress);
-                            createAutoClosingAlert('Congratulations!! translatioin ' + progress);
+                            createAutoClosingAlert('Congratulations!! Translation is completed. ');
 
 
                             //start viewer
@@ -432,13 +429,13 @@
                         }
                         else {
 
-                            createAutoClosingAlert("translation is in progress." + progress + '. Why not keep playing with this one until the new model shows up?');
+                            createAutoClosingAlert("Translation is in progress. " + progress + '. Why not keep playing with this one until the new model shows up?');
 
                         }
                     },
                     error: function () {
                         clearInterval(g_checkProgress);
-                        createAutoClosingAlert_Error("error when checking progress");
+                        createAutoClosingAlert_Error("Error when checking progress");
                     }
 
                 });
