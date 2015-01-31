@@ -107,6 +107,7 @@
             <div id="file-uploading" class="collapse">
                 <%--<input type="file" id="upload-files" name="file">--%>
                 <div id="box">Drag & Drop files from your machine on this box.</div>
+                
                 <div class="text-right">
                     <button id="upload" type="button" class="btn btn-default btn-success">Upload</button>
 
@@ -230,6 +231,8 @@
 
     <script src="Scripts/guidToNodeIdMappingExtension.js"></script>
     <script src="Scripts/Autodesk.ADN.Viewing.Extension.CustomToolbar.js"></script>
+    <script src="Scripts/Autodesk.ADN.Viewing.Extension.SEO.js"></script>
+
     <script src="Scripts/viewer.js"></script>
 
 
@@ -330,6 +333,7 @@
             box.addEventListener("dragover", OnDragOver, false);
             box.addEventListener("drop", OnDrop, false);
 
+
             $("#upload").click(function () {
 
                 //clappes the upload panel
@@ -343,7 +347,7 @@
 
                     var data = new FormData();
                     for (var i = 0; i < selectedFiles.length; i++) {
-                        data.append(selectedFiles[i].name, selectedFiles[i]);
+                        data.append(encodeURIComponent(selectedFiles[i].name), selectedFiles[i]);
                     }
 
                     $.ajax({
@@ -478,7 +482,7 @@
                 // files is a FileList of File objects. List some properties.
                 var output = [];
                 for (var i = 0, f; f = selectedFiles[i]; i++) {
-                    output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'application/stream', ') - ',
+                    output.push('<li><strong>', encodeURIComponent(f.name), '</strong> (', f.type || 'application/stream', ') - ',
                                 f.size, ' bytes, last modified: ',
                                 f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
                                 '</li>');
@@ -489,7 +493,6 @@
                 //$("#box").text(selectedFiles.length + " file(s) selected for uploading!");
 
             }
-
 
 
 

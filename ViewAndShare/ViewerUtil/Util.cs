@@ -123,7 +123,10 @@ namespace ViewerUtil
         {
             string base64URN = string.Empty;
 
-            string objectKey = HttpUtility.UrlEncode(file.FileName);
+            //Do not use HttpUtility.UrlEncode, bug for charactor '+' 
+            //string objectKey = HttpUtility.UrlEncode(file.FileName);
+
+            string objectKey = Uri.EscapeDataString(file.FileName);
 
             //read the file content
             byte[] fileData = null;

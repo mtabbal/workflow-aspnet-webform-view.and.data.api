@@ -77,12 +77,12 @@
     <Content Include="FileUploadHandler.ashx" />
     <Content Include="GetAccessToken.ashx" />
     <Content Include="config\log4net.config" />
-    <None Include="Properties\PublishProfiles\checkoutmymodel %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\filedeploy.pubxml" />
     <Content Include="Images\adsk.24x24.png" />
     <Content Include="Images\adsk.32x32.png" />
     <Content Include="Images\adsk.64x64.png" />
+    <Content Include="Scripts\Autodesk.ADN.Viewing.Extension.SEO.js" />
     <Content Include="Scripts\Autodesk.ADN.Viewing.Extension.CustomToolbar.js" />
+    <None Include="Properties\PublishProfiles\checkoutmymodel.pubxml" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

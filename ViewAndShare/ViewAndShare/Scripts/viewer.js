@@ -298,11 +298,47 @@ function loadDocument(viewer, documentId) {
             prepareGuidDb(doc);
 
 
+
+            var pageMap = propterisToPageMap(rootItem, doc);
+            console.group('SEO Extension');
+            console.log(pageMap);
+            console.groupEnd();
+
+
         }, function (errorMsg) {// onErrorCallback
             alert("Load Error: " + errorMsg);
         });
 }
 
+
+ function propterisToPageMap(node, document) {
+
+
+    var pageMapContent = '<!--';
+    for (var property in node) {
+        if (property !== 'children') {
+            if (property === 'hasThumbnail' && node[property] === 'true') {
+                pageMapContent += '<tr><td><b>Thumbnail</b></td><td><img src="' + document.getThumbnailPath(node, 300, 300) + '"></img></td></tr>';
+            }
+            else {
+                pageMapContent += '<DataObject type="action">';
+                pageMapContent += '  <Attribute name="' + property + '" value="' + node[property] + '"/>';
+                pageMapContent += '</DataObject>';
+            }
+        }
+        else {
+           
+            for (var i = 0; i < node[property].length; i++) {
+                var child = node[property][i];
+                pageMapContent += propterisToPageMap(child, document);
+            }
+            
+        }
+    }
+    pageMapContent += '-->';
+    return pageMapContent;
+
+}
 
 
 
@@ -501,8 +537,14 @@ function initializeViewer(containerId, urn, viewerEnv) {
     //_viewer.setEnvironmentMap('http://www.thesleuthjournal.com/wp-content/uploads/2014/05/grass.jpg');
 
 
-    //extension way
-    _viewer.loadExtension('Autodesk.ADN.Viewing.Extension.CustomToolbar', toolbarConfig);
+    ////extension way
+    //_viewer.loadExtension('Autodesk.ADN.Viewing.Extension.CustomToolbar', toolbarConfig);
+
+    ////load SEO extension
+    //var options = {
+    //    urn : urn
+    //            };
+    //_viewer.loadExtension('Autodesk.ADN.Viewing.Extension.SEO', options);
 }
 
 
