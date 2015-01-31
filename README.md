@@ -20,9 +20,9 @@ This sample uses the [RestSharp](http://restsharp.org/) library. You can add it 
 
 * Get your consumer key and secret key from http://developer.autodesk.com.
 * Set the API keys in the Credentials.cs file.
-* Change the bucket name for uploading files (also in the Credentials.cs file), the bucket name should only include characters, numbers in lower case and underscore(_). [As the name must be unique, we recommend you include your public key token in the name].
+* Change the bucket name for uploading files (also in the Credentials.cs file), the bucket name should only include characters in lower case, numbers and underscore(_). As the name must be unique, we recommend you include your public key token in the name.
 
-* Please note that you may get "Load Error: 5" error for the time when you launch the application, this is an expected behaviour. This is because a default model urn is hard-coded in the sample for the first run while you don't have access to it with your key pair. Please ignore this error message and upload your models using the 'Upload your files' button. Once you’ve successfully uploaded and translated a model, you can set this as your default model by copying the URN for that model into 'default.aspx', around line 247:
+* Please note that you may get "Load Error: 5" error for the time when you launch the application, this is an expected behaviour. The reason is because a default model urn is hard-coded in the sample for the first run but you don't have access to it with your key pair. Please ignore this error message and upload your models using the 'Upload your files' button. Once you’ve successfully uploaded and translated a model, you can set this as your default model by copying the URN for that model into 'default.aspx', around line 247:
 
         $(document).ready(function () {
 
@@ -35,7 +35,7 @@ This sample uses the [RestSharp](http://restsharp.org/) library. You can add it 
                 g_urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YnVja2V0X2NoZWNrb3V0bXltb2RlbC9EcmlsbC5kd2Z4';
             }
 
-You can get the urn which is part of URL parameter by clicking the 'Share' button.
+You can get your model urn by clicking the 'Share' button, the urn is the parameter of sharing URL.
 			
 ## License
 
