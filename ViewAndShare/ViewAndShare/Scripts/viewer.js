@@ -134,34 +134,6 @@ function loadDocument(viewer, documentId) {
 }
 
 
- function propterisToPageMap(node, document) {
-
-
-    var pageMapContent = '<!--';
-    for (var property in node) {
-        if (property !== 'children') {
-            if (property === 'hasThumbnail' && node[property] === 'true') {
-                pageMapContent += '<tr><td><b>Thumbnail</b></td><td><img src="' + document.getThumbnailPath(node, 300, 300) + '"></img></td></tr>';
-            }
-            else {
-                pageMapContent += '<DataObject type="action">';
-                pageMapContent += '  <Attribute name="' + property + '" value="' + node[property] + '"/>';
-                pageMapContent += '</DataObject>';
-            }
-        }
-        else {
-           
-            for (var i = 0; i < node[property].length; i++) {
-                var child = node[property][i];
-                pageMapContent += propterisToPageMap(child, document);
-            }
-            
-        }
-    }
-    pageMapContent += '-->';
-    return pageMapContent;
-
-}
 
 
 
@@ -178,6 +150,8 @@ function getPropertyValue(viewer, dbId, propName, callback) {
             for (var i = 0; i < result.properties.length; i++) {
 
                 var prop = result.properties[i];
+
+                console.log(prop.displayName + ":" + prop.displayValue);
 
                 if (prop.displayName === propName) {
 
@@ -237,6 +211,12 @@ function onViewerItemSelected(event) {
     for (var i = 0; i < dbIdArray.length; i++) {
 
         var dbId = dbIdArray[i];
+
+        getPropertyValue(_viewer, dbId, 'externalId', function (displayValue) {
+            console.log('externalId = ' + displayValue);
+        });
+
+        
 
 
  

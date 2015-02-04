@@ -81,6 +81,7 @@
     <Content Include="Images\adsk.32x32.png" />
     <Content Include="Images\adsk.64x64.png" />
     <None Include="Properties\PublishProfiles\checkoutmymodel.pubxml" />
+    <None Include="Properties\PublishProfiles\filedeploy.pubxml" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
