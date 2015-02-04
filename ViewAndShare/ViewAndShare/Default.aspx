@@ -78,9 +78,9 @@
     <div class="container">
 
         <div class="starter-template">
-            <h1>Check out my models</h1>
+            <h1>Check out my model</h1>
             <p class="lead">
-                Upload your models and share them with your friends.
+                Upload your model and share it with your friends.
               
             </p>
 
