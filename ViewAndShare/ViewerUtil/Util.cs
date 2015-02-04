@@ -1,9 +1,7 @@
 ﻿using log4net;
 using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Web;
 using ViewerUtil.Models;
@@ -17,6 +15,13 @@ namespace ViewerUtil
         string baseUrl = "";
         RestClient m_client;
 
+
+        public static AccessToken token;
+        public static DateTime issueDateTime;
+        public static int ABOUT_EXPIRED_SECONDS = 5;
+
+
+
         public Util(string baseUrl)
         {
             this.baseUrl = baseUrl;
@@ -25,28 +30,47 @@ namespace ViewerUtil
 
         public AccessToken GetAccessToken(string clientId, string clientSecret)
         {
-            AccessToken token = null;
-
-            RestRequest req = new RestRequest();
-            req.Resource = "authentication/v1/authenticate";
-            req.Method = Method.POST;
-            req.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            req.AddParameter("client_id", clientId);
-            req.AddParameter("client_secret", clientSecret);
-            req.AddParameter("grant_type", "client_credentials");
-
-            IRestResponse<AccessToken> resp = m_client.Execute<AccessToken>(req);
-            logger.Debug(resp.Content);
-
-            if (resp.StatusCode == System.Net.HttpStatusCode.OK)
+            //no token or token is expired (less than ABOUT_EXPIRED_SECONDS)
+            if (token == null
+                || (DateTime.Now - issueDateTime).Seconds > token.expires_in - ABOUT_EXPIRED_SECONDS)
             {
-                AccessToken ar = resp.Data;
-                if (ar != null)
+                RestRequest req = new RestRequest();
+                req.Resource = "authentication/v1/authenticate";
+                req.Method = Method.POST;
+                req.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+                req.AddParameter("client_id", clientId);
+                req.AddParameter("client_secret", clientSecret);
+                req.AddParameter("grant_type", "client_credentials");
+
+                IRestResponse<AccessToken> resp = m_client.Execute<AccessToken>(req);
+                logger.Debug(resp.Content);
+
+                if (resp.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    token = ar;
+                    AccessToken ar = resp.Data;
+                    if (ar != null)
+                    {
+                        token = ar;
+
+                        //update the token issue time
+                        issueDateTime = DateTime.Now;
+
+
+                    }
+                }
+                else
+                {
+
+                    logger.Fatal("Authentication failed! clientId:" + clientId);
 
                 }
+
             }
+            else
+            {
+                ;//Do nothing, use the saved accesstoken in static var 
+            }
+
             return token;
         }
 
@@ -123,7 +147,7 @@ namespace ViewerUtil
         {
             string base64URN = string.Empty;
 
-            //Do not use HttpUtility.UrlEncode, bug for charactor '+' 
+            //Do not use HttpUtility.UrlEncode, it does not encode charactor '+' 
             //string objectKey = HttpUtility.UrlEncode(file.FileName);
 
             string objectKey = Uri.EscapeDataString(file.FileName);

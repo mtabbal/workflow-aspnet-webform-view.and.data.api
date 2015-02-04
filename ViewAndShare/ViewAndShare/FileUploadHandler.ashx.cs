@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.SessionState;
 using ViewerUtil;
 using ViewerUtil.Models;
@@ -21,10 +16,10 @@ namespace ViewAndShare
 
         public void ProcessRequest(HttpContext context)
         {
-           
+
             string CLIENT_ID = Credentials.CONSUMER_KEY;
             string CLIENT_SECRET = Credentials.CONSUMER_SECRET;
-            string DEFAULT_BUCKET_KEY = Credentials.DEFAULT_BUCKET_KEY; 
+            string DEFAULT_BUCKET_KEY = Credentials.DEFAULT_BUCKET_KEY;
 
 
             string json = "";
@@ -32,16 +27,11 @@ namespace ViewAndShare
 
             string accessToken;
 
-            //TODO: check expiration of access token
-            if (context.Session["token"] == null)
-            {
-                AccessToken token = util.GetAccessToken(CLIENT_ID, CLIENT_SECRET);
 
-                accessToken = token.access_token;
-                context.Session["token"] = accessToken;
+            AccessToken token = util.GetAccessToken(CLIENT_ID, CLIENT_SECRET);
 
-            }
-            accessToken = context.Session["token"].ToString();
+            accessToken = token.access_token;
+
             string bucketKey = DEFAULT_BUCKET_KEY;
 
             //create bucket if not exist
