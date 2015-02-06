@@ -151,15 +151,27 @@ function getPropertyValue(viewer, dbId, propName, callback) {
 
                 var prop = result.properties[i];
 
-                console.log(prop.displayName + ":" + prop.displayValue);
+                if (prop.hidden) {
+                    console.log('[Hidden] - ' + prop.displayName + ' : ' + prop.displayValue);
+                } else {
+                    console.log(prop.displayName + ' : ' + prop.displayValue);
+                }
+
 
                 if (prop.displayName === propName) {
 
                     callback(prop.displayValue);
                 }
+
+               
             }
 
             callback('');
+        }
+
+        //get external Id
+        if (result.externalId) {
+            console.log('[externalId] -- ' + result.externalId.displayName + ' : ' + result.externalId.displayValue);
         }
     }
 
@@ -213,7 +225,10 @@ function onViewerItemSelected(event) {
         var dbId = dbIdArray[i];
 
         getPropertyValue(_viewer, dbId, 'externalId', function (displayValue) {
-            console.log('externalId = ' + displayValue);
+
+            if (displayValue !== '') {
+                console.log('externalId = ' + displayValue);
+            }
         });
 
         

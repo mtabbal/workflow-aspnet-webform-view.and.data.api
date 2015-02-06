@@ -41,6 +41,8 @@ namespace ViewerUtil
                 req.AddParameter("client_id", clientId);
                 req.AddParameter("client_secret", clientSecret);
                 req.AddParameter("grant_type", "client_credentials");
+                //avoid CORS issue
+                req.AddHeader("Access-Control-Allow-Origin", "*");
 
                 IRestResponse<AccessToken> resp = m_client.Execute<AccessToken>(req);
                 logger.Debug(resp.Content);
