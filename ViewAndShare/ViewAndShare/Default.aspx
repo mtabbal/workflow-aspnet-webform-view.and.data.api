@@ -226,16 +226,21 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/start/jquery-ui.css" type="text/css"/>
 
 
-    <link rel="stylesheet" href="https://developer-stg.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css"/>
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css" />
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
+<!--
+    <link rel="stylesheet" href="https://developer-stg.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css" />
     <script src="https://developer-stg.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
+
+    -->
 
     <script src="Scripts/viewer.js"></script>
 
 
     <script type="text/javascript">
 
-        //var viewerEnv = "AutodeskProduction"; //AutodeskProduction,AutodeskStaging
-        var viewerEnv = "AutodeskStaging"; //AutodeskProduction,AutodeskStaging
+        var viewerEnv = "AutodeskProduction"; //AutodeskProduction,AutodeskStaging
+        //var viewerEnv = "AutodeskStaging"; //AutodeskProduction,AutodeskStaging
 
         $(document).ready(function () {
 
