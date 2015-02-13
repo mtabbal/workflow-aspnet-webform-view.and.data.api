@@ -136,48 +136,6 @@ function loadDocument(viewer, documentId) {
 
 
 
-
-///////////////////////////////////////////////////////////////////////////
-//
-//
-///////////////////////////////////////////////////////////////////////////
-function getPropertyValue(viewer, dbId, propName, callback) {
-
-    function propsCallback(result) {
-
-        if (result.properties) {
-
-            for (var i = 0; i < result.properties.length; i++) {
-
-                var prop = result.properties[i];
-
-                if (prop.hidden) {
-                    console.log('[Hidden] - ' + prop.displayName + ' : ' + prop.displayValue);
-                } else {
-                    console.log(prop.displayName + ' : ' + prop.displayValue);
-                }
-
-
-                if (prop.displayName === propName) {
-
-                    callback(prop.displayValue);
-                }
-
-               
-            }
-
-            callback('');
-        }
-
-        //get external Id
-        if (result.externalId) {
-            console.log('[externalId] -- ' + result.externalId.displayName + ' : ' + result.externalId.displayValue);
-        }
-    }
-
-    viewer.getProperties(dbId, propsCallback);
-}
-
 ///////////////////////////////////////////////////////////////////////////
 //
 //
@@ -186,7 +144,9 @@ function clearCurrentModel() {
 
     var viewerElement = document.getElementById('viewer3d');
     if (viewerElement != null) {
-        viewerElement.parentNode.removeChild(viewerElement);
+        var container =  document.getElementById('viewerContainer');
+        //viewerElement.parentNode.removeChild(viewerElement);
+        container.innerHTML = '';
     }
 
 }
@@ -224,11 +184,28 @@ function onViewerItemSelected(event) {
 
         var dbId = dbIdArray[i];
 
-        getPropertyValue(_viewer, dbId, 'externalId', function (displayValue) {
+        _viewer.getProperties(dbId, function (result) {
 
-            if (displayValue !== '') {
-                console.log('externalId = ' + displayValue);
+            if (result.properties) {
+
+                for (var i = 0; i < result.properties.length; i++) {
+
+                    var prop = result.properties[i];
+
+                    if (prop.hidden) {
+                        console.log('[Hidden] - ' + prop.displayName + ' : ' + prop.displayValue);
+                    } else {
+                        console.log(prop.displayName + ' : ' + prop.displayValue);
+                    }
+                }
+
             }
+
+            //get external Id
+            if (result.externalId) {
+                console.log('[externalId] -- ' + result.externalId.displayName + ' : ' + result.externalId.displayValue);
+            }
+
         });
 
         
