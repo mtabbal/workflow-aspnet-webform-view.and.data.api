@@ -1,5 +1,6 @@
 ﻿using System;
 using ViewerUtil;
+using ViewerUtil.Models;
 
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "Web.config", Watch = true)]
 namespace ViewAndShare
@@ -24,20 +25,26 @@ namespace ViewAndShare
                 Util util = new Util(BASE_URL);
 
 
-                string token = util.GetAccessToken(CLIENT_ID,
-                   CLIENT_SECRET).access_token;
-                if (token == string.Empty)
+                AccessToken token = util.GetAccessToken(CLIENT_ID,
+                   CLIENT_SECRET);
+                if (token == null)
                 {
                     log.Error("Authentication error");
+
+                    //Fatal error
+                    Response.Redirect("Error.aspx");
                 }
-                log.Info("Authentication success, token : " + token);
+                else
+                {
+                    log.Info("Authentication success, token : " + token.access_token);
+                }
 
 
 
-                bool bucketExist = util.IsBucketExist(DEFAULT_BUCKET_KEY, token);
+                bool bucketExist = util.IsBucketExist(DEFAULT_BUCKET_KEY, token.access_token);
                 if (!bucketExist)
                 {
-                    util.CreateBucket(DEFAULT_BUCKET_KEY, token);
+                    util.CreateBucket(DEFAULT_BUCKET_KEY, token.access_token);
                 }
 
             }
