@@ -203,7 +203,7 @@ function onViewerItemSelected(event) {
 
             //get external Id
             if (result.externalId) {
-                console.log('[externalId] -- ' + result.externalId.displayName + ' : ' + result.externalId.displayValue);
+                console.log('[externalId] -- ' + result.externalId);
             }
 
         });
