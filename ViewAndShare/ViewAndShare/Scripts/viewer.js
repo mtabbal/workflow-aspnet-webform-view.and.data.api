@@ -22,7 +22,7 @@ function createViewer(containerId, urn, viewerEnv) {
 
     viewerElement.id = 'viewer3d';
 
-    //rember the 'px' at the end of height/width
+    //remember the 'px' at the end of height/width
     //as style.width and style.height actually takes a string
     viewerElement.style.height = viewerContainer.clientHeight + 'px';
     viewerElement.style.width = viewerContainer.clientWidth + 'px';
@@ -178,6 +178,7 @@ function getPropertyValue(viewer, dbId, propName, callback) {
     viewer.getProperties(dbId, propsCallback);
 }
 
+
 ///////////////////////////////////////////////////////////////////////////
 //
 //
@@ -186,7 +187,9 @@ function clearCurrentModel() {
 
     var viewerElement = document.getElementById('viewer3d');
     if (viewerElement != null) {
-        viewerElement.parentNode.removeChild(viewerElement);
+        var container =  document.getElementById('viewerContainer');
+        //viewerElement.parentNode.removeChild(viewerElement);
+        container.innerHTML = '';
     }
 
 }
@@ -224,11 +227,28 @@ function onViewerItemSelected(event) {
 
         var dbId = dbIdArray[i];
 
-        getPropertyValue(_viewer, dbId, 'externalId', function (displayValue) {
+        _viewer.getProperties(dbId, function (result) {
 
-            if (displayValue !== '') {
-                console.log('externalId = ' + displayValue);
+            if (result.properties) {
+
+                for (var i = 0; i < result.properties.length; i++) {
+
+                    var prop = result.properties[i];
+
+                    if (prop.hidden) {
+                        console.log('[Hidden] - ' + prop.displayName + ' : ' + prop.displayValue);
+                    } else {
+                        console.log(prop.displayName + ' : ' + prop.displayValue);
+                    }
+                }
+
             }
+
+            //get external Id
+            if (result.externalId) {
+                console.log('[externalId] -- ' + result.externalId);
+            }
+
         });
 
         
