@@ -23,8 +23,7 @@ This sample uses the [RestSharp](http://restsharp.org/) library. You can add it 
 * Set the API keys in the Credentials.cs file.
 * Change the bucket name for uploading files (also in the Credentials.cs file), the bucket name should only include characters in lower case, numbers and underscore(_). As the name must be unique, we recommend you include your public key token in the name.
 * Go to property of "ViewAndShare" web project, in "Web" tab, it uses "IIS Express", click "Create Virtual Directory". 
-
-* Please note that you may get "Load Error: 5" error for the time when you launch the application, this is an expected behaviour. The reason is because a default model urn is hard-coded in the sample for the first run but you don't have access to it with your key pair. Please ignore this error message and upload your models using the 'Upload your files' button. Once you’ve successfully uploaded and translated a model, you can set this as your default model by copying the URN for that model into 'default.aspx', around line 247:
+* Please note that you may get "Load Error: 5" error for the first time when you launch the application, this is an expected behaviour. The reason is because a default model urn is hard-coded in the sample for the first run but you don't have access to it with your key pair. Please ignore this error message and upload your models using the 'Upload your files' button. Once you’ve successfully uploaded and translated a model, you can set this as your default model by copying the URN for that model into 'default.aspx', around line 247:
 
         $(document).ready(function () {
 
