@@ -248,9 +248,14 @@
 
             var g_urn = Autodesk.Viewing.Private.getParameterByName("urn");
 
-            //default model
+            ////default model for production
+            //if (!g_urn) {
+            //    g_urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YnVja2V0X2NoZWNrb3V0bXltb2RlbC9EcmlsbC5kd2Z4';
+            //}
+
+            //default model for staging
             if (!g_urn) {
-                g_urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YnVja2V0X2NoZWNrb3V0bXltb2RlbC9EcmlsbC5kd2Z4';
+                g_urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2tvdXRtb2RlbHNidWNrZXQyMDE1MDEzMS9EcmlsbC5kd2Z4';
             }
 
             //init viewer and show the default model

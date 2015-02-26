@@ -18,7 +18,7 @@ namespace ViewerUtil
 
         public static AccessToken token;
         public static DateTime issueDateTime;
-        //refresh toekn if the token is about to expire in 5 deconds
+        //refresh token if the token is about to expire in 5 seconds
         public static int ABOUT_EXPIRED_SECONDS = 5;
 
 
@@ -31,10 +31,12 @@ namespace ViewerUtil
 
         public AccessToken GetAccessToken(string clientId, string clientSecret)
         {
-            //no token or token is going to be expired (less than ABOUT_EXPIRED_SECONDS)
+            //no token or token is going to be expired 
+            // (less than ABOUT_EXPIRED_SECONDS)
 
             if (token == null
-                || (DateTime.Now - issueDateTime).TotalSeconds > (token.expires_in - ABOUT_EXPIRED_SECONDS))
+                || (DateTime.Now - issueDateTime).TotalSeconds
+                    > (token.expires_in - ABOUT_EXPIRED_SECONDS))
             {
                 RestRequest req = new RestRequest();
                 req.Resource = "authentication/v1/authenticate";
@@ -43,7 +45,8 @@ namespace ViewerUtil
                 req.AddParameter("client_id", clientId);
                 req.AddParameter("client_secret", clientSecret);
                 req.AddParameter("grant_type", "client_credentials");
-                //avoid CORS issue
+                //avoid CORS issue, do not use this if you just need to
+                //get the access token from same domain
                 req.AddHeader("Access-Control-Allow-Origin", "*");
 
                 IRestResponse<AccessToken> resp = m_client.Execute<AccessToken>(req);
@@ -72,7 +75,7 @@ namespace ViewerUtil
             }
             else
             {
-                ;//Do nothing, use the saved accesstoken in static var 
+                ;//Do nothing, use the saved access token in static var 
             }
 
             return token;
