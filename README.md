@@ -14,7 +14,7 @@ See the [live demo](http://checkoutmymodel.autodesk.io/).
 
 ##Dependencies
 
-This sample uses the [RestSharp](http://restsharp.org/) library. You can add it to your project using NuGet in Visual Studio.
+This sample uses the [RestSharp](http://restsharp.org/) and [log4net](http://logging.apache.org/log4net/index.html) libraries.  You can add them to your project using NuGet in Visual Studio. 
 
 ##Setup/Usage Instructions
 
