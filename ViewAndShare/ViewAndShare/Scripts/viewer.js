@@ -18,6 +18,9 @@ function createViewer(containerId, urn, viewerEnv) {
 
     var viewerContainer = document.getElementById(containerId);
 
+    //clear existing viewer element if exist
+    viewerContainer.innerHTML = "";
+
     var viewerElement = document.createElement("div");
 
     viewerElement.id = 'viewer3d';

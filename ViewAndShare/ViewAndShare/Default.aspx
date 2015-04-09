@@ -104,7 +104,7 @@
                 </div>
             </div>
 
-            <div id="file-uploading" class="collapse">
+            <div id="file-uploading" >
                 <%--<input type="file" id="upload-files" name="file">--%>
                 <div id="box">Drag & Drop files into this box.</div>
                 
@@ -217,13 +217,10 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="Scripts/jquery-1.9.0.min.js"></script>
+    <script src="Scripts/jquery-1.9.0.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/modernizr-2.5.3.js"></script>
-
-    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/start/jquery-ui.css" type="text/css"/>
 
 
     <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css" />
@@ -236,7 +233,6 @@
     <script type="text/javascript">
 
         var viewerEnv = "AutodeskProduction"; //AutodeskProduction,AutodeskStaging
-        //var viewerEnv = "AutodeskStaging"; //AutodeskProduction,AutodeskStaging
 
         $(document).ready(function () {
 
@@ -244,19 +240,10 @@
 
             var g_urn = Autodesk.Viewing.Private.getParameterByName("urn");
 
-            //default model for production
-            if (!g_urn) {
-                g_urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YnVja2V0X2NoZWNrb3V0bXltb2RlbC9EcmlsbC5kd2Z4';
+            if (g_urn) {
+                //init viewer and show the default model
+                initializeViewer('viewerContainer', g_urn, viewerEnv);
             }
-
-            ////default model for staging
-            //if (!g_urn) {
-            //    g_urn = 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2tvdXRtb2RlbHNidWNrZXQyMDE1MDEzMS9EcmlsbC5kd2Z4';
-            //}
-
-            //init viewer and show the default model
-            initializeViewer('viewerContainer', g_urn, viewerEnv);
-
 
 
             ////////////////////////////////////////////////
