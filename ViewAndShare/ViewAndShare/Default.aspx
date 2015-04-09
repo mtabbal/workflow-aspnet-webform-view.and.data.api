@@ -242,7 +242,7 @@
 
             if (g_urn) {
                 //init viewer and show the default model
-                initializeViewer('viewerContainer', g_urn, viewerEnv);
+                createViewer('viewerContainer', g_urn, viewerEnv);
             }
 
 
@@ -418,7 +418,7 @@
 
                             //start viewer
                             clearCurrentModel();
-                            initializeViewer('viewerContainer', urn, viewerEnv);
+                            createViewer('viewerContainer', urn, viewerEnv);
                         }
                         else {
 

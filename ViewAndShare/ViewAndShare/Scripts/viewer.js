@@ -87,6 +87,8 @@ function createViewer(containerId, urn, viewerEnv) {
         e.preventDefault();
     });
 
+    viewer.addEventListener('selection', onViewerItemSelected)
+
     return viewer;
 }
 
@@ -264,22 +266,7 @@ function onViewerItemSelected(event) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////
-//
-//
-///////////////////////////////////////////////////////////////////////////
-function initializeViewer(containerId, urn, viewerEnv) {
 
-    if (typeof (viewerEnv) == "undefined") {
-        viewerEnv = "AutodeskProduction";
-    }
-
-    _viewer = createViewer(containerId, urn, viewerEnv);
-
-    _viewer.addEventListener('selection', onViewerItemSelected)
-
-
-}
 
 //////////////////////////////////////////////////////////////////////////
 //
