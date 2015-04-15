@@ -104,6 +104,7 @@
                 </div>
             </div>
 
+            <div id="file-uploading" class="collapse in" >
                 <%--<input type="file" id="upload-files" name="file">--%>
                 <div id="box">Drag & Drop files into this box.</div>
                 
