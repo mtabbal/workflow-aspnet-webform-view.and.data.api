@@ -232,6 +232,19 @@
 
     <script type="text/javascript">
 
+        var _isIE11 = !!navigator.userAgent.match(/Trident\/7\./);
+        if (_isIE11) {
+
+
+            var message = 'It seems you are using IE11, please refer to <a href="http://adndevblog.typepad.com/cloud_and_mobile/2015/04/view-and-data-api-now-support-ie11.html">this blog post</a> to config your browser to view this sample correctly.';
+
+            $('#alert_placeholder').html('<div id="alertDiv" class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message + '</div>');
+            var alert = $('#alertDiv');
+            alert.alert();
+
+        }
+
+
         var viewerEnv = "AutodeskProduction"; //AutodeskProduction,AutodeskStaging
 
         $(document).ready(function () {
