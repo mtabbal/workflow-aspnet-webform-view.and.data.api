@@ -87,7 +87,7 @@ function createViewer(containerId, urn, viewerEnv) {
         e.preventDefault();
     });
 
-    viewer.addEventListener('selection', onViewerItemSelected)
+    viewer.addEventListener('selection', onViewerItemSelected);
 
     return viewer;
 }

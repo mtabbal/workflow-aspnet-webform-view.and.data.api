@@ -435,7 +435,7 @@
                         }
                         else {
 
-                            createAutoClosingAlert("Translation is in progress. " + progress + '. Why not keep playing with this one until the new model shows up?');
+                            createAutoClosingAlert("Translation is in progress. " + progress + '.');
 
                         }
                     },
