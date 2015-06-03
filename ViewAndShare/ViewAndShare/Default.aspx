@@ -126,6 +126,9 @@
         <!-- Viewer container -->
         <div class="row">
             <div>
+                <div id="divSearch" class="collapse">
+                    Search Text : <input id="txtSearch" class="input-sm" /><button id="btnSearch" class="btn-default glyphicon-search">Search</button>
+                </div>
                
                 <div id="viewerContainer" class="text-center" style="height: 600px; width: 1170px;">
                    
@@ -223,8 +226,8 @@
     <script src="Scripts/modernizr-2.5.3.js"></script>
 
 
-    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=v1.2.14" type="text/css" />
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v1.2.14"></script>
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=v1.2.15" type="text/css" />
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v1.2.15"></script>
 
 
     <script src="Scripts/viewer.js"></script>
@@ -432,6 +435,10 @@
                             //start viewer
                             clearCurrentModel();
                             createViewer('viewerContainer', urn, viewerEnv);
+
+                            //show search page
+                            $('#divSearch').collapse("show");
+
                         }
                         else {
 

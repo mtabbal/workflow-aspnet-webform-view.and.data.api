@@ -292,3 +292,18 @@ function getAccessToken() {
     return newToken;
 }
 
+
+
+$('#btnSearch').click(function () {
+
+    var searchText = $('#txtSearch').val();
+    _viewer.search(searchText, function (idArray) {
+
+        if (idArray.length > 0) {
+            _viewer.fitToView(idArray);
+            _viewer.isolate(idArray);  // select them in the viewer
+        }
+        
+    });
+
+});
