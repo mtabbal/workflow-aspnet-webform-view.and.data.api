@@ -223,8 +223,8 @@
     <script src="Scripts/modernizr-2.5.3.js"></script>
 
 
-    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css" />
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=v1.2.14" type="text/css" />
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v1.2.14"></script>
 
 
     <script src="Scripts/viewer.js"></script>
