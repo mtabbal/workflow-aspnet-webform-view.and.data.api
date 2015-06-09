@@ -6,6 +6,11 @@ function createViewer(containerId, urn, viewerEnv) {
 
     _viewer = initViewer(containerId, urn, viewerEnv);
 
+    window.onresize = function () {
+
+        _viewer.resize();
+    }
+
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -93,7 +98,7 @@ function initViewer(containerId, urn, viewerEnv) {
         e.preventDefault();
     });
 
-    viewer.addEventListener('selection', onViewerItemSelected);
+    viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onViewerItemSelected);
 
 
     return viewer;
@@ -147,48 +152,6 @@ function loadDocument(viewer, documentId) {
 
 
 
-
-
-///////////////////////////////////////////////////////////////////////////
-//
-//
-///////////////////////////////////////////////////////////////////////////
-function getPropertyValue(viewer, dbId, propName, callback) {
-
-    function propsCallback(result) {
-
-        if (result.properties) {
-
-            for (var i = 0; i < result.properties.length; i++) {
-
-                var prop = result.properties[i];
-
-                if (prop.hidden) {
-                    console.log('[Hidden] - ' + prop.displayName + ' : ' + prop.displayValue);
-                } else {
-                    console.log(prop.displayName + ' : ' + prop.displayValue);
-                }
-
-
-                if (prop.displayName === propName) {
-
-                    callback(prop.displayValue);
-                }
-
-               
-            }
-
-            callback('');
-        }
-
-        //get external Id
-        if (result.externalId) {
-            console.log('[externalId] -- ' + result.externalId);
-        }
-    }
-
-    viewer.getProperties(dbId, propsCallback);
-}
 
 
 ///////////////////////////////////////////////////////////////////////////

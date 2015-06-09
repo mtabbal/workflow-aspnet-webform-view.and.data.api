@@ -227,6 +227,7 @@
 
 
     <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=v1.2.15" type="text/css" />
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/three.min.js?v=v1.2.15"></script>
     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v1.2.15"></script>
 
 
